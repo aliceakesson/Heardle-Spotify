@@ -33,17 +33,15 @@ function run() {
         var maxWidth = 0;
         for(let i = 2; i <= listened + 1; i++) {
             var part = document.querySelector("#time-parts div:nth-child(" + i + ")");
-            console.log(part.style.width);
-            maxWidth += part.style.width;
+            var width = part.offsetWidth;
+            maxWidth += width;
         }
 
-        //console.log(maxWidth);
-
-        if(time < endTime * 100) {
+        if(time < endTime * 100 && timeObject.offsetWidth < maxWidth) {
             time += 1; 
             var newWidth = (time / (endTime * 100)) * 100;
             timeObject.style.width = newWidth + "%";
-        } else if(time == endTime * 100) {
+        } else {
             pause();
         }
     }
