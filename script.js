@@ -12,6 +12,7 @@ const darkColor = "#666";
 const redColor = "red";
 const greenColor = "green";
 const bgColor = "#111";
+const darkerColor = "#222";
 
 const timeWidth = 700; 
 const endTime = 16; 
@@ -27,6 +28,7 @@ var textfield = document.querySelector("#textfield textarea");
 var timeObject = document.getElementById('currentTime');
 
 setInterval(run, 10);
+setInterval(timerUntilMidnight, 1000);
 document.querySelector("#play p:last-child").innerHTML = "0:" + endTime;
 
 function run() {
@@ -47,6 +49,33 @@ function run() {
         }
     }
 }
+function timerUntilMidnight() {
+    if(gameOver) { // The timer on the winning/losing page
+        var hours = "00"; 
+        var minutes = "00"; 
+        var seconds = "00"; 
+
+        var now = new Date();
+        
+        var i = 23 - now.getHours(); 
+        hours = i.toString();
+        if(i < 10)
+            hours = "0" + i.toString();
+
+        i = 59 - now.getMinutes();
+        minutes = i.toString();
+        if(i < 10)
+            minutes = "0" + i.toString();
+
+        i = 59 - now.getSeconds();
+        seconds = i.toString();
+        if(i < 10)
+            seconds = "0" + i.toString();
+
+        var timer = document.querySelector("#timeDiv p:last-child");
+        timer.innerHTML = hours + ":" + minutes + ":" + seconds;
+    }
+}
 
 clearButton.addEventListener('click', clear);
 
@@ -58,13 +87,13 @@ playButton.addEventListener('click', function() {
 });
 
 skipButton.addEventListener('click', function() {
-    var icon = document.querySelector("#top div:nth-child(" + (listened + 1) + ") i");
+    var icon = document.querySelector("#guesses div:nth-child(" + listened + ") i");
     icon.className = "";
     icon.classList.add("fa-regular");
     icon.classList.add("fa-square");
     icon.style.visibility = "visible";
 
-    var p = document.querySelector("#top div:nth-child(" + (listened + 1) + ") p");
+    var p = document.querySelector("#guesses div:nth-child(" + listened + ") p");
     p.innerHTML = "SKIPPED";
     p.style.visibility = "visible";
 
@@ -86,13 +115,13 @@ textfield.addEventListener('blur', function() {
 function submit(song) {
     if(song != this.song) {
         if(song != "") {
-            var icon = document.querySelector("#top div:nth-child(" + (listened + 1) + ") i");
+            var icon = document.querySelector("#guesses div:nth-child(" + listened + ") i");
             icon.className = "";
             icon.classList.add("fa-solid");
             icon.classList.add("fa-xmark");
             icon.style.visibility = "visible";
 
-            var p = document.querySelector("#top div:nth-child(" + (listened + 1) + ") p");
+            var p = document.querySelector("#guesses div:nth-child(" + listened + ") p");
             p.innerHTML = song;
             p.style.visibility = "visible";
 
@@ -101,13 +130,13 @@ function submit(song) {
         }
     }
     else {
-        var icon = document.querySelector("#top div:nth-child(" + (listened + 1) + ") i");
+        var icon = document.querySelector("#guesses div:nth-child(" + listened + ") i");
         icon.className = "";
         icon.classList.add("fa-solid");
         icon.classList.add("fa-check");
         icon.style.visibility = "visible";
 
-        var p = document.querySelector("#top div:nth-child(" + (listened + 1) + ") p");
+        var p = document.querySelector("#guesses div:nth-child(" + listened + ") p");
         p.innerHTML = song;
         p.style.visibility = "visible";
         
@@ -134,10 +163,10 @@ function revealMore() {
     if(listened < 6) {
         listened += 1;
 
-        var part = document.querySelector("#time-parts div:nth-child(" + (listened + 1) + ")");
+        var part = document.querySelector("#time-parts div:nth-child(" + listened + ")");
         part.style.backgroundColor = darkColor;
 
-        var prePart = document.querySelector("#time-parts div:nth-child(" + listened + ")");
+        var prePart = document.querySelector("#time-parts div:nth-child(" + (listened - 1) + ")");
         prePart.style.borderColor = bgColor; 
     }
 }
@@ -147,10 +176,66 @@ function clear() {
 }
 
 function youWon() {
-    gameOver = true; 
+    showSong();
     console.log("Du gissade rätt!");
 }
 function youLost() {
-    gameOver = true; 
+    showSong();
     console.log("Du förlorade! Svaret var: " + song);
+}
+
+function showSong() {
+    gameOver = true; 
+
+    for(let i = 3; i <= 7; i++) {
+        var part = document.querySelector("#time-parts div:nth-child(" + i + ")");
+        part.style.width = "0%";
+    }
+    document.querySelector("#time-parts div:nth-child(2)").style.width = "100%";
+
+    textDiv.style.visibility = "hidden";
+    textDiv.style.height = "0";
+
+    var buttons = document.getElementById("buttons");
+
+    buttons.style.visibility = "hidden";
+    buttons.style.height = "0";
+
+    var guesses = document.getElementById("guesses");
+    guesses.style.visibility = "hidden";
+    guesses.style.height = "0";
+    for(let i = 1; i <= 6; i++) {
+        var icon = document.querySelector("#guesses div:nth-child(" + i + ") i");
+        icon.style.visibility = "hidden";
+
+        var p = document.querySelector("#guesses div:nth-child(" + i + ") p");
+        p.style.visibility = "hidden";
+    }
+
+    var reveal = document.getElementById("reveal");
+    reveal.style.visibility = "visible";
+    reveal.style.height = "auto";
+
+    for(let i = 1; i <= 6; i++) {
+        var part = document.querySelector("#stats div:nth-child(" + i + ")");
+        var icon = document.querySelector("#guesses div:nth-child(" + i + ") i");
+        if(icon.classList.contains("fa-check"))
+            part.style.backgroundColor = greenColor;
+        else if(icon.classList.contains("fa-xmark"))
+            part.style.backgroundColor = redColor;
+        else if(icon.classList.contains("fa-square"))
+            part.style.backgroundColor = darkColor;
+        else 
+            part.style.backgroundColor = darkerColor; 
+    }
+
+    time = 0; 
+    audio.currentTime = 0; 
+    audio.play();
+
+    playButton.className = "";
+    playButton.classList.add("fa-solid");
+    playButton.classList.add("fa-pause");
+
+    timerUntilMidnight();
 }

@@ -21,7 +21,7 @@ h1 {
     transform: translate(-50%, 0);
 }
 
-#top div {
+#guesses div {
     height: 40px;
     margin: 10px 0;
     border: #ddd 1px solid;
@@ -29,12 +29,12 @@ h1 {
     display: flex;
 }
 
-#top div i {
+#guesses div i {
     margin-top: 10px;
     visibility: hidden;
 }
 
-#top div p {
+#guesses div p {
     color: #ddd;
     text-align: left;
     vertical-align: middle;
@@ -43,17 +43,60 @@ h1 {
     visibility: hidden;
 }
 
-#top .fa-check {
+#guesses .fa-check {
     color: green;
     padding-right: 10px;
 }
-#top .fa-xmark {
+#guesses .fa-xmark {
     color: red;
     padding-right: 16px;
 }
-#top .fa-square {
+#guesses .fa-square {
     color: #eee;
     padding-right: 13px;
+}
+
+/*----------------------------------------------------------------------------------*/
+
+#reveal {
+    visibility: hidden;
+    height: 0;
+    margin: 0 auto; 
+    width: auto;
+    padding-top: 60px;
+}
+
+#song {
+    font-size: 20px;
+    padding-bottom: 30px;
+}
+
+#statsDiv {
+    font-size: 18px;
+    margin: 0 auto;
+    width: auto;
+    padding-bottom: 30px;
+}
+#stats {
+    display: flex;
+    margin: 0 auto;
+    width: 200px;
+}
+#stats div {
+    width: 20px;
+    height: 10px;
+    padding: 5px;
+    margin: 0 5px;
+}
+
+#timeDiv {
+    font-size: 15px;
+    width: auto;
+    margin: 0 auto; 
+}
+#timeDiv p:last-child {
+    font-size: 40px;
+    margin-top: -10px;
 }
 
 /*----------------------------------------------------------------------------------*/
