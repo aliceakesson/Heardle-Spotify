@@ -5,6 +5,7 @@ var song = "Fångad av en stormvind - Carola";
 var time = 0; 
 
 function isPlaying() { return !audio.paused; }
+var gameOver = false; 
 
 const lightColor = "#eee";
 const darkColor = "#666";
@@ -56,7 +57,19 @@ playButton.addEventListener('click', function() {
         pause()
 });
 
-skipButton.addEventListener('click', revealMore);
+skipButton.addEventListener('click', function() {
+    var icon = document.querySelector("#top div:nth-child(" + (listened + 1) + ") i");
+    icon.className = "";
+    icon.classList.add("fa-regular");
+    icon.classList.add("fa-square");
+    icon.style.visibility = "visible";
+
+    var p = document.querySelector("#top div:nth-child(" + (listened + 1) + ") p");
+    p.innerHTML = "SKIPPED";
+    p.style.visibility = "visible";
+
+    revealMore();
+});
 
 submitButton.addEventListener('click', function() {
     var song = textfield.value; 
@@ -73,12 +86,33 @@ textfield.addEventListener('blur', function() {
 function submit(song) {
     if(song != this.song) {
         if(song != "") {
+            var icon = document.querySelector("#top div:nth-child(" + (listened + 1) + ") i");
+            icon.className = "";
+            icon.classList.add("fa-solid");
+            icon.classList.add("fa-xmark");
+            icon.style.visibility = "visible";
+
+            var p = document.querySelector("#top div:nth-child(" + (listened + 1) + ") p");
+            p.innerHTML = song;
+            p.style.visibility = "visible";
+
             clear();
             revealMore();
         }
     }
     else {
-        console.log("Du gissade rätt!");
+        var icon = document.querySelector("#top div:nth-child(" + (listened + 1) + ") i");
+        icon.className = "";
+        icon.classList.add("fa-solid");
+        icon.classList.add("fa-check");
+        icon.style.visibility = "visible";
+
+        var p = document.querySelector("#top div:nth-child(" + (listened + 1) + ") p");
+        p.innerHTML = song;
+        p.style.visibility = "visible";
+        
+        clear();
+        youWon();
     }
 }
 
@@ -110,4 +144,13 @@ function revealMore() {
 
 function clear() {
     textfield.value = "";
+}
+
+function youWon() {
+    gameOver = true; 
+    console.log("Du gissade rätt!");
+}
+function youLost() {
+    gameOver = true; 
+    console.log("Du förlorade! Svaret var: " + song);
 }

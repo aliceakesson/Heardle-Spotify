@@ -31,6 +31,7 @@ h1 {
 
 #top div i {
     margin-top: 10px;
+    visibility: hidden;
 }
 
 #top div p {
@@ -39,6 +40,7 @@ h1 {
     vertical-align: middle;
     margin: 10px 0 0 0;
     padding: 0;
+    visibility: hidden;
 }
 
 #top .fa-check {
@@ -48,6 +50,10 @@ h1 {
 #top .fa-xmark {
     color: red;
     padding-right: 16px;
+}
+#top .fa-square {
+    color: #eee;
+    padding-right: 13px;
 }
 
 /*----------------------------------------------------------------------------------*/
