@@ -1,7 +1,29 @@
+const data = [
+    {
+        titel:"Fångad Av En Stormvind",
+        artist:"Carola",
+        path:"songs/FangadAvEnStormvind.mp3"
+    }, 
+    {
+        titel:"Jag Kommer",
+        artist:"Veronica Maggio",
+        path:"songs/JagKommer.mp3"
+    }, 
+    {
+        titel:"Välkommen In",
+        artist:"Veronica Maggio",
+        path:"songs/ValkommenIn.mp3"
+    }
+]
+
 var listened = 1;
 
-var audio = new Audio("stormvind.mp3");
-var song = "Fångad av en stormvind - Carola";
+var index = Math.floor(Math.random() * data.length);
+
+var audio = new Audio(data[index].path);
+var song = data[index].titel + " - " + data[index].artist;
+document.getElementById('song').innerHTML = song;
+
 var time = 0; 
 
 function isPlaying() { return !audio.paused; }
@@ -76,6 +98,29 @@ function timerUntilMidnight() {
         timer.innerHTML = hours + ":" + minutes + ":" + seconds;
     }
 }
+
+textfield.addEventListener('input', function() {
+    var parent = document.querySelector("#alternatives div");
+    while(parent.firstChild) {
+        parent.removeChild(parent.lastChild);
+    }
+
+    if(textfield.value.length > 0) {
+        data.forEach(function(song) {
+            if(song.titel.toLowerCase().includes(textfield.value.toLowerCase()) 
+                || song.artist.toLowerCase().includes(textfield.value.toLowerCase())) {
+                var div = document.createElement("div");
+                div.innerHTML = song.titel + " - " + song.artist;
+    
+                div.addEventListener('click', function() {
+                    textfield.value = div.innerHTML;
+                })
+
+                parent.appendChild(div);
+            }
+        });
+    }
+})
 
 clearButton.addEventListener('click', clear);
 

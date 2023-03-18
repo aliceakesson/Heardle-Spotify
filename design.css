@@ -197,6 +197,29 @@ h1 {
     right: 0;
 }
 
+#alternatives {
+    position: absolute;
+    top: 0;
+    transform: translate(0, -100%);
+    border: #eee 1px solid;
+    background-color: #111;
+    width: 100%;
+    box-sizing: border-box;
+}
+#alternatives div {
+    display: block;
+}
+#alternatives div div {
+    width: 700px;
+    text-align: left;
+    border-top: #eee 1px solid;
+    padding: 10px;
+    box-sizing: border-box;
+}
+#alternatives div div:first-child {
+    border: none; 
+}
+
 #textfield {
     width: 700px;
     height: 30px;
@@ -204,6 +227,7 @@ h1 {
     border: #eee 1px solid;
     display: flex;
     padding: 10px 0;
+    position: relative;
 }
 #textfield textarea {
     color: #eee;
