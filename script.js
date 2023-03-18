@@ -94,10 +94,13 @@ skipButton.addEventListener('click', function() {
     icon.style.visibility = "visible";
 
     var p = document.querySelector("#guesses div:nth-child(" + listened + ") p");
-    p.innerHTML = "SKIPPED";
+    p.innerHTML = "SKIPPAD";
     p.style.visibility = "visible";
 
-    revealMore();
+    if(listened < 6)
+        revealMore();
+    else 
+        youLost();
 });
 
 submitButton.addEventListener('click', function() {
@@ -126,7 +129,11 @@ function submit(song) {
             p.style.visibility = "visible";
 
             clear();
-            revealMore();
+            
+            if(listened < 6)
+                revealMore();
+            else   
+                youLost();
         }
     }
     else {
@@ -163,10 +170,10 @@ function revealMore() {
     if(listened < 6) {
         listened += 1;
 
-        var part = document.querySelector("#time-parts div:nth-child(" + listened + ")");
+        var part = document.querySelector("#time-parts div:nth-child(" + (listened + 1) + ")");
         part.style.backgroundColor = darkColor;
 
-        var prePart = document.querySelector("#time-parts div:nth-child(" + (listened - 1) + ")");
+        var prePart = document.querySelector("#time-parts div:nth-child(" + listened + ")");
         prePart.style.borderColor = bgColor; 
     }
 }
@@ -176,12 +183,12 @@ function clear() {
 }
 
 function youWon() {
+    document.querySelector("#statsDiv p:first-child").innerHTML = "Grattis! Du vann!";
     showSong();
-    console.log("Du gissade rätt!");
 }
 function youLost() {
+    document.querySelector("#statsDiv p:first-child").innerHTML = "Bättre lycka nästa gång!";
     showSong();
-    console.log("Du förlorade! Svaret var: " + song);
 }
 
 function showSong() {

@@ -214,6 +214,7 @@ h1 {
     border: none;
     font-size: 16px;
     font-weight: 100;
+    overflow-y: hidden;
 }
 #textfield textarea::placeholder {
     color: #666;
