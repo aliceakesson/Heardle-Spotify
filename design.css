@@ -195,6 +195,6 @@ h1 {
 
 /*----------------------------------------------------------------------------------*/
 
-#play i:hover, #skip:hover, #submit:hover, #textfield i:hover {
+#play i:hover, #skip:hover, #submit:hover {
     cursor: pointer;
 }
