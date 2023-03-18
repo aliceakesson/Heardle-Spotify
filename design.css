@@ -78,32 +78,40 @@ h1 {
     width: 700px;
     margin: auto;
     height: 100%;
+    position: relative;
 }
-#time div div:first-child {
+#time div div:nth-child(2) {
     border-left: #666 1px solid;
     background-color: #666;
 }
-#time div div {
+#currentTime {
+    height: 100%;
+    width: 0;
+    background-color: green;
+    position: absolute;
+    left: 0;
+    border: none;
+}
+#time-parts div {
     border-right: #666 1px solid;
-    width: 50px;
 }
 
-#time div div:nth-child(1) {
+#time-parts div:nth-child(2) {
     width: 6%;
 }
-#time div div:nth-child(2) {
+#time-parts div:nth-child(3) {
     width: 6%;
 }
-#time div div:nth-child(3) {
+#time-parts div:nth-child(4) {
     width: 13%;
 }
-#time div div:nth-child(4) {
+#time-parts div:nth-child(5) {
     width: 20%;
 }
-#time div div:nth-child(5) {
+#time-parts div:nth-child(6) {
     width: 25%;
 }
-#time div div:nth-child(6) {
+#time-parts div:nth-child(7) {
     width: 30%;
 }
 
