@@ -226,6 +226,7 @@ h1 {
     margin: 0 auto; 
     border: #eee 1px solid;
     display: flex;
+    z-index: 10;
     padding: 10px 0;
     position: relative;
 }

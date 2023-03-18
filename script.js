@@ -38,6 +38,7 @@ const darkerColor = "#222";
 
 const timeWidth = 700; 
 const endTime = 16; 
+const alternativesLimit = 7; 
 
 var clearButton = document.querySelector('#textfield i:last-child');
 var playButton = document.querySelector('#play i');
@@ -100,27 +101,37 @@ function timerUntilMidnight() {
 }
 
 textfield.addEventListener('input', function() {
-    var parent = document.querySelector("#alternatives div");
-    while(parent.firstChild) {
-        parent.removeChild(parent.lastChild);
-    }
+    clearAlternatives();
 
     if(textfield.value.length > 0) {
+        var parent = document.querySelector("#alternatives div");
+        var count = 0; 
         data.forEach(function(song) {
-            if(song.titel.toLowerCase().includes(textfield.value.toLowerCase()) 
-                || song.artist.toLowerCase().includes(textfield.value.toLowerCase())) {
+            if((song.titel.toLowerCase().includes(textfield.value.toLowerCase()) 
+                || song.artist.toLowerCase().includes(textfield.value.toLowerCase()))
+                && count < alternativesLimit) {
                 var div = document.createElement("div");
                 div.innerHTML = song.titel + " - " + song.artist;
     
-                div.addEventListener('click', function() {
+                div.addEventListener('mousedown', function() {
                     textfield.value = div.innerHTML;
+                    clearAlternatives();
                 })
 
                 parent.appendChild(div);
+
+                count += 1;
             }
         });
     }
 })
+
+function clearAlternatives() {
+    var parent = document.querySelector("#alternatives div");
+    while(parent.firstChild) {
+        parent.removeChild(parent.lastChild);
+    }
+}
 
 clearButton.addEventListener('click', clear);
 
@@ -150,6 +161,7 @@ skipButton.addEventListener('click', function() {
 
 submitButton.addEventListener('click', function() {
     var song = textfield.value; 
+    clearAlternatives();
     submit(song);
 });
 
@@ -158,6 +170,7 @@ textfield.addEventListener('focus', function() {
 });
 textfield.addEventListener('blur', function() {
     textDiv.style.borderColor = lightColor;
+    clearAlternatives();
 });
 
 function submit(song) {
