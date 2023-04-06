@@ -62,7 +62,26 @@ const data = [
     }
 ]
 
-console.log(accessToken);
+const access_token = accessToken; 
+
+const artistName = "Måneskin";
+const searchType = "track";
+const artistID = "9gZMGu9hQ_ytTQGHgfrt0A"; 
+const endpoint = `https://api.spotify.com/v1/search?q=artist:${artistName}&type=${searchType}`;
+
+const headers = { Authorization: `Bearer ${access_token}` };
+
+fetch(endpoint, { headers })
+  .then((response) => response.json())
+  .then((data) => {
+    const tracks = data.tracks.items;
+    tracks.forEach((track) => {
+      console.log(`${track.name} - ${track.id}`);
+    });
+  })
+  .catch((error) => console.error(error));
+
+
 
 var listened = 1;
 
