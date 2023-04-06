@@ -14,8 +14,8 @@ const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 
-const client_id = '7b20c76e8d7545caa9c27bf75be8ef9c'; // Your client id
-const client_secret = 'a9e494a91ae94b6cb8cc4b2225949aa1'; // Your secret
+const client_id = ''; // Your client id
+const client_secret = ''; // Your secret
 const redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
 const stateKey = 'spotify_auth_state';
 
