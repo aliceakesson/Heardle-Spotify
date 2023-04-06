@@ -13,6 +13,8 @@ const cors = require('cors');
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const fs = require('fs');
+const cheerio = require('cheerio');
 
 require('dotenv').config();
 
@@ -91,7 +93,18 @@ app.get('/callback', function(req, res) {
         var access_token = body.access_token,
             refresh_token = body.refresh_token;
 
-        module.exports = access_token; 
+        const htmlFilePath = path.join(__dirname + '/views/index.html');
+        const htmlContent = fs.readFileSync(htmlFilePath, 'utf8');  
+
+        const $ = cheerio.load(htmlContent);
+        const scriptTag = $('script#access-token');
+        scriptTag.html('var accessToken = "' + access_token + '";');
+        fs.writeFileSync(htmlFilePath, $.html(), 'utf8');
+
+        // const updatedHtmlContent = htmlContent.replace('', '');
+        // fs.writeFileSync(htmlFilePath, updatedHtmlContent);
+
+        //module.exports = access_token; 
 
         var options = {
           url: 'https://api.spotify.com/v1/me',

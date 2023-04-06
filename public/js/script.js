@@ -62,6 +62,8 @@ const data = [
     }
 ]
 
+console.log(accessToken);
+
 var listened = 1;
 
 var index = Math.floor(Math.random() * data.length);
