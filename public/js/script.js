@@ -30,11 +30,6 @@ const data = [
         path:"songs/LongRoadToHell.mp3"
     },
     {
-        titel:"gangnam style",
-        artist:"hej",
-        path:"songs/hej.mp3",
-    },
-    {
         titel:"Coraline",
         artist:"Måneskin",
         path:"songs/Coraline.mp3",
@@ -67,12 +62,11 @@ const data = [
     }
 ]
 
-
-
 var listened = 1;
 
 var index = Math.floor(Math.random() * data.length);
-index = 12; 
+index = 0;
+// index = data.length - 1; 
 
 var audio = new Audio(data[index].path);
 var song = data[index].titel + " - " + data[index].artist;
