@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "path": "^0.12.7",
+    "querystring": "^0.2.1",
+    "request": "^2.88.2"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "heardle-swedish",
+  "description": "Heardle but with swedish bangers",
+  "version": "1.0.0",
+  "main": "script.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aliceakesson/Heardle-Swedish.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aliceakesson/Heardle-Swedish/issues"
+  },
+  "homepage": "https://github.com/aliceakesson/Heardle-Swedish#readme"
+}
