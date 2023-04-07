@@ -63,10 +63,7 @@ const data = [
 ]
 
 import toggle from './player.js';
-
-
 const access_token = accessToken; 
-
 
 // const artistName = "Måneskin";
 // const searchType = "track";
@@ -80,7 +77,7 @@ const access_token = accessToken;
 //   .then((data) => {
 //     const tracks = data.tracks.items;
 //     tracks.forEach((track) => {
-//       console.log(`${track.name} - ${track.id}`);
+//       console.log(`${track.name} - ${track.uri}`);
 //     });
 //   })
 //   .catch((error) => console.error(error));
