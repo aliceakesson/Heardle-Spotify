@@ -101,11 +101,6 @@ app.get('/callback', function(req, res) {
         scriptTag.html('var accessToken = "' + access_token + '";');
         fs.writeFileSync(htmlFilePath, $.html(), 'utf8');
 
-        // const updatedHtmlContent = htmlContent.replace('', '');
-        // fs.writeFileSync(htmlFilePath, updatedHtmlContent);
-
-        //module.exports = access_token; 
-
         var options = {
           url: 'https://api.spotify.com/v1/me',
           headers: { 'Authorization': 'Bearer ' + access_token },
