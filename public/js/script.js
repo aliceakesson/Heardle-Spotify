@@ -62,41 +62,42 @@ const data = [
     }
 ]
 
-import toggle from './player.js';
+import {toggle, changeSong} from './player.js';
 const access_token = accessToken; 
 
-// const artistName = "Måneskin";
-// const searchType = "track";
-// const artistID = "9gZMGu9hQ_ytTQGHgfrt0A"; 
-// const endpoint = `https://api.spotify.com/v1/search?q=artist:${artistName}&type=${searchType}`;
+const artistName = "Måneskin";
+const searchType = "track";
+const artistID = "9gZMGu9hQ_ytTQGHgfrt0A"; 
+const endpoint = `https://api.spotify.com/v1/search?q=artist:${artistName}&type=${searchType}`;
 
-// const headers = { Authorization: `Bearer ${access_token}` };
+const headers = { Authorization: `Bearer ${access_token}` };
 
-// fetch(endpoint, { headers })
-//   .then((response) => response.json())
-//   .then((data) => {
-//     const tracks = data.tracks.items;
-//     tracks.forEach((track) => {
-//       console.log(`${track.name} - ${track.uri}`);
-//     });
-//   })
-//   .catch((error) => console.error(error));
+fetch(endpoint, { headers })
+  .then((response) => response.json())
+  .then((data) => {
+    const tracks = data.tracks.items;
+    tracks.forEach((track) => {
+    //   console.log(`${track.name} - ${track.uri}`);
+    });
+  })
+  .catch((error) => console.error(error));
 
-// const timezone = "4Tbuh5q66Ygubei5Xru4jB";
+// const timezone = 'spotify:track:4Tbuh5q66Ygubei5Xru4jB';
+const beggin = 'spotify:track:3Wrjm47oTz2sjIgck11l5e';
+
+changeSong(beggin);
 
 var listened = 1;
 
 var index = Math.floor(Math.random() * data.length);
 index = 0;
-// index = data.length - 1; 
 
-var audio = new Audio(data[index].path);
 var song = data[index].titel + " - " + data[index].artist;
 document.getElementById('song').innerHTML = song;
 
 var time = 0; 
 
-function isPlaying() { return !audio.paused; }
+var isPlaying = false; 
 var gameOver = false; 
 
 const lightColor = "#eee";
@@ -124,8 +125,9 @@ setInterval(run, 10);
 setInterval(timerUntilMidnight, 1000);
 document.querySelector("#play p:last-child").innerHTML = "0:" + endTime;
 
+
 function run() {
-    if(isPlaying()) {
+    if(isPlaying) {
         var maxWidth = 0;
         for(let i = 2; i <= listened + 1; i++) {
             var part = document.querySelector("#time-parts div:nth-child(" + i + ")");
@@ -168,6 +170,26 @@ function timerUntilMidnight() {
         var timer = document.querySelector("#timeDiv p:last-child");
         timer.innerHTML = hours + ":" + minutes + ":" + seconds;
     }
+}
+
+function getPosition() {
+    fetch('https://api.spotify.com/v1/me/player', {
+    headers: {
+        'Authorization': `Bearer ${access_token}`
+    }
+    })
+    .then(response => {
+        if (!response.ok) {
+        throw new Error('Failed to get current playback state');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(`Current position in song: ${data.progress_ms} ms`);
+    })
+    .catch(error => {
+        console.error(error);
+    });
 }
 
 textfield.addEventListener('input', function() {
@@ -283,19 +305,18 @@ function submit(song) {
 function play() {
     playButton.classList.remove("fa-play");
     playButton.classList.add("fa-pause");
-    audio.currentTime = 0; 
     time = 0; 
-    // audio.play();
 
-    toggle();
+    isPlaying = true; 
+    toggle(true);
 }
 function pause() {
     playButton.classList.remove("fa-pause");
     playButton.classList.add("fa-play");
-    // audio.pause();
     timeObject.style.width = "0";
 
-    toggle();
+    isPlaying = false; 
+    toggle(false);
 }
 
 function revealMore() {
@@ -369,8 +390,7 @@ function showSong() {
     }
 
     time = 0; 
-    audio.currentTime = 0; 
-    audio.play();
+    play();
 
     playButton.className = "";
     playButton.classList.add("fa-solid");

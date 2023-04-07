@@ -1,10 +1,11 @@
 var play = false; 
 var tempPlay = false; 
 
-const song = 'spotify:track:4Tbuh5q66Ygubei5Xru4jB';
+const timezone = 'spotify:track:4Tbuh5q66Ygubei5Xru4jB';
+const beggin = 'spotify:track:3Wrjm47oTz2sjIgck11l5e';
+const token = accessToken;
 
 window.onSpotifyWebPlaybackSDKReady = () => {
-    const token = accessToken;
     const player = new Spotify.Player({
         name: 'Web Playback SDK Quick Start Player',
         getOAuthToken: cb => { cb(token); },
@@ -14,7 +15,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     // Ready
     player.addListener('ready', ({ device_id }) => {
         console.log('Ready with Device ID', device_id);
-        playSong(song);
+        changeSong(beggin);
+        nextSong();
         printState();
     });
     
@@ -92,22 +94,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             console.log('Playing Next', next_track);
         });
     }
-
-    const playSong = async (uri) => {
-        console.log("Changing song");
-        let request_answer = await fetch(
-          "https://api.spotify.com/v1/me/player/play",
-          {
-            method: "PUT",
-            body: JSON.stringify({
-              uris: [uri],
-            }),
-            headers: new Headers({
-              Authorization: "Bearer " + token,
-            }),
-          }
-        ).then((data) => console.log(data));
-      };
     
     const restart = async () => {
         fetch('https://api.spotify.com/v1/me/player/seek?position_ms=0', {
@@ -128,6 +114,45 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     }
 }; 
 
-export default function toggle() {
-    play = !play; 
+function toggle(on) {
+    play = on; 
 }
+
+const changeSong = async (uri) => {
+    console.log("Changing song to " + uri);
+    fetch(`https://api.spotify.com/v1/me/player/play?uris=${uri}`, {
+    method: 'PUT',
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+    })
+    .then(response => {
+        if (!response.ok) {
+        throw new Error('Failed to change song');
+        }
+        console.log('Song changed successfully');
+    })
+    .catch(error => {
+        console.error(error);
+    });
+};
+
+const nextSong = async () => {
+    fetch('https://api.spotify.com/v1/me/player/next', {
+    method: 'POST',
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+    })
+    .then(response => {
+        if (!response.ok) {
+        throw new Error('Failed to skip to next song');
+        }
+        console.log('Skipped to next song');
+    })
+    .catch(error => {
+        console.error(error);
+    });
+}
+
+export { toggle, changeSong, nextSong };
