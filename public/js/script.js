@@ -62,26 +62,30 @@ const data = [
     }
 ]
 
+import toggle from './player.js';
+
+
 const access_token = accessToken; 
 
-const artistName = "Måneskin";
-const searchType = "track";
-const artistID = "9gZMGu9hQ_ytTQGHgfrt0A"; 
-const endpoint = `https://api.spotify.com/v1/search?q=artist:${artistName}&type=${searchType}`;
 
-const headers = { Authorization: `Bearer ${access_token}` };
+// const artistName = "Måneskin";
+// const searchType = "track";
+// const artistID = "9gZMGu9hQ_ytTQGHgfrt0A"; 
+// const endpoint = `https://api.spotify.com/v1/search?q=artist:${artistName}&type=${searchType}`;
 
-fetch(endpoint, { headers })
-  .then((response) => response.json())
-  .then((data) => {
-    const tracks = data.tracks.items;
-    tracks.forEach((track) => {
-      console.log(`${track.name} - ${track.id}`);
-    });
-  })
-  .catch((error) => console.error(error));
+// const headers = { Authorization: `Bearer ${access_token}` };
 
+// fetch(endpoint, { headers })
+//   .then((response) => response.json())
+//   .then((data) => {
+//     const tracks = data.tracks.items;
+//     tracks.forEach((track) => {
+//       console.log(`${track.name} - ${track.id}`);
+//     });
+//   })
+//   .catch((error) => console.error(error));
 
+// const timezone = "4Tbuh5q66Ygubei5Xru4jB";
 
 var listened = 1;
 
@@ -284,13 +288,17 @@ function play() {
     playButton.classList.add("fa-pause");
     audio.currentTime = 0; 
     time = 0; 
-    audio.play();
+    // audio.play();
+
+    toggle();
 }
 function pause() {
     playButton.classList.remove("fa-pause");
     playButton.classList.add("fa-play");
-    audio.pause();
+    // audio.pause();
     timeObject.style.width = "0";
+
+    toggle();
 }
 
 function revealMore() {

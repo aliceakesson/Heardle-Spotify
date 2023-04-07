@@ -10,6 +10,7 @@
     "nodemon": "^2.0.22",
     "path": "^0.12.7",
     "querystring": "^0.2.1",
+    "react-spotify-web-playback": "^0.13.4",
     "request": "^2.88.2"
   }
 }
