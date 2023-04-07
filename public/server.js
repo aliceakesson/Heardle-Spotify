@@ -157,34 +157,6 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-// export default function getToken(accessToken) {
-//   // do something with the access token here
-//   console.log(`Access token is ${accessToken}`);
-// }
-
-// --------------------------------------------
-
-// const getToken = async () => {
-//   const response = await fetch('https://accounts.spotify.com/api/token', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/x-www-form-urlencoded',
-//       'Authorization': 'Basic <base64 encoded client_id:client_secret>'
-//     },
-//     body: 'grant_type=client_credentials'
-//   });
-
-//   const data = await response.json();
-//   const accessToken = data.access_token;
-
-//   return accessToken;
-// }
-
-function getToken() {
-  
-}
-module.exports = getToken; 
-
 console.log('Listening on 8888');
 app.listen(8888);
 

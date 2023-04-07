@@ -62,6 +62,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         console.log('Currently Playing', current_track);
         console.log('Playing Next', next_track);
     });
+
+    
     
 }; 
 
