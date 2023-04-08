@@ -18,6 +18,9 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     // Ready
     player.addListener('ready', ({ device_id }) => {
         console.log('Ready with Device ID', device_id);
+        player.togglePlay({
+            "uris": [beggin]
+          });
         // player.nextTrack();
         // player.resume()
         // .then(() => {
@@ -73,16 +76,11 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
     function run() {
         if(play && !tempPlay) {
-            // player.togglePlay();
             restart();
             player.togglePlay();
             printState();
-            console.log("play");
         } else if(!play && tempPlay) {
-            // player.pause();
             player.togglePlay();
-            printState();
-            console.log("pause");
         }
 
         if(listened > 6 && !hasRestarted) {
@@ -120,7 +118,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             if (!response.ok) {
             throw new Error('Failed to restart song');
             }
-            console.log('Song restarted successfully');
+            // console.log('Song restarted successfully');
         })
         .catch(error => {
             console.error(error);
@@ -132,6 +130,16 @@ function toggle(on) {
     play = on; 
 }
 
+/*
+fetch('https://api.spotify.com/v1/me/player/play', {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ uris: [uri] }),
+    })
+*/ 
 const playSong = async (uri) => {
     console.log("Changing song to " + uri);
     fetch(`https://api.spotify.com/v1/me/player/play?uris=${uri}`, {

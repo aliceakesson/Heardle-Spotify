@@ -233,15 +233,8 @@ function clearAlternatives() {
 clearButton.addEventListener('click', clear);
 
 playButton.addEventListener('click', function() {
-    if(firstClick) {
-        playSong(songURI);
-        // nextSong();
-        console.log("First click");
-        firstClick = false; 
-    }
-
     if(playButton.classList.contains("fa-play"))
-        play()
+        play();
     else 
         pause()
 });
@@ -319,7 +312,8 @@ function play() {
     playButton.classList.add("fa-pause");
     time = 0; 
 
-    isPlaying = true; 
+    isPlaying = true;
+    playSong(songURI); 
     toggle(true);
 }
 function pause() {
