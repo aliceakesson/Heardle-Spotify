@@ -62,7 +62,7 @@ const data = [
     }
 ]
 
-import {toggle, changeSong} from './player.js';
+import {toggle, playSong, nextSong} from './player.js';
 const access_token = accessToken; 
 
 const artistName = "Måneskin";
@@ -83,9 +83,7 @@ fetch(endpoint, { headers })
   .catch((error) => console.error(error));
 
 // const timezone = 'spotify:track:4Tbuh5q66Ygubei5Xru4jB';
-const beggin = 'spotify:track:3Wrjm47oTz2sjIgck11l5e';
-
-changeSong(beggin);
+const songURI = 'spotify:track:3Wrjm47oTz2sjIgck11l5e'; //beggin
 
 var listened = 1;
 
@@ -116,6 +114,8 @@ var playButton = document.querySelector('#play i');
 var skipButton = document.getElementById('skip');
 var submitButton = document.getElementById('submit');
 
+var firstClick = true; 
+
 var textDiv = document.getElementById('textfield');
 var textfield = document.querySelector("#textfield textarea");
 
@@ -129,7 +129,12 @@ document.querySelector("#play p:last-child").innerHTML = "0:" + endTime;
 function run() {
     if(isPlaying) {
         var maxWidth = 0;
-        for(let i = 2; i <= listened + 1; i++) {
+
+        var k = listened;
+        if(listened > 6)
+            k = 6;
+
+        for(let i = 2; i <= k + 1; i++) {
             var part = document.querySelector("#time-parts div:nth-child(" + i + ")");
             var width = part.offsetWidth;
             maxWidth += width;
@@ -228,6 +233,13 @@ function clearAlternatives() {
 clearButton.addEventListener('click', clear);
 
 playButton.addEventListener('click', function() {
+    if(firstClick) {
+        playSong(songURI);
+        // nextSong();
+        console.log("First click");
+        firstClick = false; 
+    }
+
     if(playButton.classList.contains("fa-play"))
         play()
     else 
@@ -345,6 +357,8 @@ function youLost() {
 }
 
 function showSong() {
+    listened++;
+
     gameOver = true; 
 
     for(let i = 3; i <= 7; i++) {
@@ -388,13 +402,13 @@ function showSong() {
         else 
             part.style.backgroundColor = darkerColor; 
     }
-
-    time = 0; 
-    play();
-
+    
     playButton.className = "";
     playButton.classList.add("fa-solid");
-    playButton.classList.add("fa-pause");
+
+    play();
 
     timerUntilMidnight();
 }
+
+export { listened };

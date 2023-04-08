@@ -1,5 +1,8 @@
+import { listened } from './script.js';
+
 var play = false; 
 var tempPlay = false; 
+var hasRestarted = false; 
 
 const timezone = 'spotify:track:4Tbuh5q66Ygubei5Xru4jB';
 const beggin = 'spotify:track:3Wrjm47oTz2sjIgck11l5e';
@@ -15,8 +18,14 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     // Ready
     player.addListener('ready', ({ device_id }) => {
         console.log('Ready with Device ID', device_id);
-        changeSong(beggin);
-        nextSong();
+        // player.nextTrack();
+        // player.resume()
+        // .then(() => {
+        //     console.log('Playback resumed.');
+        // })
+        // .catch(error => {
+        //     console.error('Failed to resume playback:', error);
+        // });
         printState();
     });
     
@@ -66,15 +75,20 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         if(play && !tempPlay) {
             // player.togglePlay();
             restart();
+            player.togglePlay();
+            printState();
             console.log("play");
         } else if(!play && tempPlay) {
             // player.pause();
+            player.togglePlay();
+            printState();
             console.log("pause");
         }
 
-        if(play != tempPlay) {
-            player.togglePlay();
-            printState();
+        if(listened > 6 && !hasRestarted) {
+            restart();
+            play = true; 
+            hasRestarted = true; 
         }
 
         tempPlay = play;
@@ -118,7 +132,7 @@ function toggle(on) {
     play = on; 
 }
 
-const changeSong = async (uri) => {
+const playSong = async (uri) => {
     console.log("Changing song to " + uri);
     fetch(`https://api.spotify.com/v1/me/player/play?uris=${uri}`, {
     method: 'PUT',
@@ -155,4 +169,4 @@ const nextSong = async () => {
     });
 }
 
-export { toggle, changeSong, nextSong };
+export { toggle, playSong, nextSong };
