@@ -1,66 +1,66 @@
-const data = [
-    {
-        titel:"Fångad Av En Stormvind",
-        artist:"Carola",
-        path:"songs/FangadAvEnStormvind.mp3"
-    }, 
-    {
-        titel:"Jag Kommer",
-        artist:"Veronica Maggio",
-        path:"songs/JagKommer.mp3"
-    }, 
-    {
-        titel:"Välkommen In",
-        artist:"Veronica Maggio",
-        path:"songs/ValkommenIn.mp3"
-    }, 
-    {
-        titel:"Dear Boy",
-        artist:"Avicii",
-        path:"songs/DearBoy.mp3"
-    },
-    {
-        titel:"Track Of My Tears",
-        artist:"Avicii",
-        path:"songs/TrackOfMyTears.mp3"
-    },
-    {
-        titel:"Long Road To Hell",
-        artist:"Avicii",
-        path:"songs/LongRoadToHell.mp3"
-    },
-    {
-        titel:"Coraline",
-        artist:"Måneskin",
-        path:"songs/Coraline.mp3",
-    },
-    {
-        titel:"Somebody told me",
-        artist:"Månseskin",
-        path:"songs/SomebodyToldMe.mp3",
-    },
-    {
-        titel:"Niente da dire",
-        artist:"Måneskin",
-        path:"songs/NienteDaDire.mp3"
+// const data = [
+//     {
+//         titel:"Fångad Av En Stormvind",
+//         artist:"Carola",
+//         path:"songs/FangadAvEnStormvind.mp3"
+//     }, 
+//     {
+//         titel:"Jag Kommer",
+//         artist:"Veronica Maggio",
+//         path:"songs/JagKommer.mp3"
+//     }, 
+//     {
+//         titel:"Välkommen In",
+//         artist:"Veronica Maggio",
+//         path:"songs/ValkommenIn.mp3"
+//     }, 
+//     {
+//         titel:"Dear Boy",
+//         artist:"Avicii",
+//         path:"songs/DearBoy.mp3"
+//     },
+//     {
+//         titel:"Track Of My Tears",
+//         artist:"Avicii",
+//         path:"songs/TrackOfMyTears.mp3"
+//     },
+//     {
+//         titel:"Long Road To Hell",
+//         artist:"Avicii",
+//         path:"songs/LongRoadToHell.mp3"
+//     },
+//     {
+//         titel:"Coraline",
+//         artist:"Måneskin",
+//         path:"songs/Coraline.mp3",
+//     },
+//     {
+//         titel:"Somebody told me",
+//         artist:"Månseskin",
+//         path:"songs/SomebodyToldMe.mp3",
+//     },
+//     {
+//         titel:"Niente da dire",
+//         artist:"Måneskin",
+//         path:"songs/NienteDaDire.mp3"
 
-    }, 
-    {
-        titel:"I Could Be The One",
-        artist:"Avicii",
-        path:"songs/ICouldBeTheOne.mp3"
-    },
-    {
-        titel:"We Write The Story",
-        artist:"Avicii",
-        path:"songs/WeWriteTheStory.mp3"
-    },
-    {
-        titel:"Superlove",
-        artist:"Avicii",
-        path:"songs/Superlove.mp3"
-    }
-]
+//     }, 
+//     {
+//         titel:"I Could Be The One",
+//         artist:"Avicii",
+//         path:"songs/ICouldBeTheOne.mp3"
+//     },
+//     {
+//         titel:"We Write The Story",
+//         artist:"Avicii",
+//         path:"songs/WeWriteTheStory.mp3"
+//     },
+//     {
+//         titel:"Superlove",
+//         artist:"Avicii",
+//         path:"songs/Superlove.mp3"
+//     }
+// ]
 
 import {toggle, playSong, nextSong} from './player.js';
 const access_token = accessToken; 
@@ -72,27 +72,33 @@ const endpoint = `https://api.spotify.com/v1/search?q=artist:${artistName}&type=
 
 const headers = { Authorization: `Bearer ${access_token}` };
 
+var data = [];
+
+var index = 0; 
+var song = '';
+
 fetch(endpoint, { headers })
   .then((response) => response.json())
-  .then((data) => {
-    const tracks = data.tracks.items;
+  .then((responseData) => {
+    const tracks = responseData.tracks.items;
     tracks.forEach((track) => {
-    //   console.log(`${track.name} - ${track.uri}`);
+        const song = { titel:track.name, artist:track.artists[0], uri:track.uri };
+        data.push(song);
     });
+
+    index = Math.floor(Math.random() * data.length);
+    song = data[index].titel + " - " + data[index].artist;
+    document.getElementById('song').innerHTML = song;
   })
   .catch((error) => console.error(error));
+  
+console.log(`Song: ${song}`);
 
 const timezone = 'spotify:track:4Tbuh5q66Ygubei5Xru4jB';
 const beggin = 'spotify:track:3Wrjm47oTz2sjIgck11l5e';
 const songURI = timezone; 
 
 var listened = 1;
-
-var index = Math.floor(Math.random() * data.length);
-index = 0;
-
-var song = data[index].titel + " - " + data[index].artist;
-document.getElementById('song').innerHTML = song;
 
 var time = 0; 
 

@@ -18,7 +18,18 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     // Ready
     player.addListener('ready', ({ device_id }) => {
         console.log('Ready with Device ID', device_id);
-        pauseSong();
+        fetch('https://api.spotify.com/v1/me/player', {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.is_playing) {
+                pauseSong();
+            }
+        })
+        .catch(error => console.error("An error occurred while checking if the player is playing music:", error));
         printState();
     });
     
@@ -148,7 +159,7 @@ const pauseSong = async (uri) => {
             if (!response.ok) {
             throw new Error('Failed to pause song');
             }
-            // console.log('Song restarted successfully');
+            // console.log('Song paused successfully');
         })
         .catch(error => {
             console.error(error);
