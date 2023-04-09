@@ -32,8 +32,9 @@ const headers = { Authorization: `Bearer ${access_token}` };
 //   .catch((error) => console.error(error));
 
 //By Playlist
-const playlist_id = '6noCZtPPWYRlAfYZTZL5p3';
-const endpoint = `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`;
+const playlist_id = '3LRK928B9YNYIuRMmcaFxx';
+const limit = 100;
+const endpoint = `https://api.spotify.com/v1/playlists/${playlist_id}/tracks?limit=${limit}`;
 
 var data = [];
 var index = -1; 
