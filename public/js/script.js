@@ -1,80 +1,14 @@
-// const data = [
-//     {
-//         titel:"Fångad Av En Stormvind",
-//         artist:"Carola",
-//         path:"songs/FangadAvEnStormvind.mp3"
-//     }, 
-//     {
-//         titel:"Jag Kommer",
-//         artist:"Veronica Maggio",
-//         path:"songs/JagKommer.mp3"
-//     }, 
-//     {
-//         titel:"Välkommen In",
-//         artist:"Veronica Maggio",
-//         path:"songs/ValkommenIn.mp3"
-//     }, 
-//     {
-//         titel:"Dear Boy",
-//         artist:"Avicii",
-//         path:"songs/DearBoy.mp3"
-//     },
-//     {
-//         titel:"Track Of My Tears",
-//         artist:"Avicii",
-//         path:"songs/TrackOfMyTears.mp3"
-//     },
-//     {
-//         titel:"Long Road To Hell",
-//         artist:"Avicii",
-//         path:"songs/LongRoadToHell.mp3"
-//     },
-//     {
-//         titel:"Coraline",
-//         artist:"Måneskin",
-//         path:"songs/Coraline.mp3",
-//     },
-//     {
-//         titel:"Somebody told me",
-//         artist:"Månseskin",
-//         path:"songs/SomebodyToldMe.mp3",
-//     },
-//     {
-//         titel:"Niente da dire",
-//         artist:"Måneskin",
-//         path:"songs/NienteDaDire.mp3"
+import {toggle, playSong } from './player.js';
 
-//     }, 
-//     {
-//         titel:"I Could Be The One",
-//         artist:"Avicii",
-//         path:"songs/ICouldBeTheOne.mp3"
-//     },
-//     {
-//         titel:"We Write The Story",
-//         artist:"Avicii",
-//         path:"songs/WeWriteTheStory.mp3"
-//     },
-//     {
-//         titel:"Superlove",
-//         artist:"Avicii",
-//         path:"songs/Superlove.mp3"
-//     }
-// ]
-
-import {toggle, playSong, nextSong} from './player.js';
 const access_token = accessToken; 
+const headers = { Authorization: `Bearer ${access_token}` };
 
 const artistName = "Måneskin";
 const searchType = "track";
-const artistID = "9gZMGu9hQ_ytTQGHgfrt0A"; 
 const endpoint = `https://api.spotify.com/v1/search?q=artist:${artistName}&type=${searchType}`;
 
-const headers = { Authorization: `Bearer ${access_token}` };
-
 var data = [];
-
-var index = 0; 
+var index = -1; 
 var song = '';
 
 fetch(endpoint, { headers })
@@ -82,21 +16,16 @@ fetch(endpoint, { headers })
   .then((responseData) => {
     const tracks = responseData.tracks.items;
     tracks.forEach((track) => {
-        const song = { titel:track.name, artist:track.artists[0], uri:track.uri };
+        const song = { titel:track.name, artist:track.artists[0].name, uri:track.uri };
         data.push(song);
     });
 
     index = Math.floor(Math.random() * data.length);
     song = data[index].titel + " - " + data[index].artist;
+    console.log(`Index: ${index}, song: ${song}`);
     document.getElementById('song').innerHTML = song;
   })
   .catch((error) => console.error(error));
-  
-console.log(`Song: ${song}`);
-
-const timezone = 'spotify:track:4Tbuh5q66Ygubei5Xru4jB';
-const beggin = 'spotify:track:3Wrjm47oTz2sjIgck11l5e';
-const songURI = timezone; 
 
 var listened = 1;
 
@@ -120,8 +49,6 @@ var clearButton = document.querySelector('#textfield i:last-child');
 var playButton = document.querySelector('#play i');
 var skipButton = document.getElementById('skip');
 var submitButton = document.getElementById('submit');
-
-var firstClick = true; 
 
 var textDiv = document.getElementById('textfield');
 var textfield = document.querySelector("#textfield textarea");
@@ -277,9 +204,12 @@ textfield.addEventListener('blur', function() {
     clearAlternatives();
 });
 
-function submit(song) {
-    if(song != this.song) {
-        if(song != "") {
+function submit(choice) {
+    var songString = JSON.stringify(choice);
+    songString = songString.substring(1, songString.length - 1);
+
+    if(songString != song) {
+        if(songString != "") {
             var icon = document.querySelector("#guesses div:nth-child(" + listened + ") i");
             icon.className = "";
             icon.classList.add("fa-solid");
@@ -287,7 +217,7 @@ function submit(song) {
             icon.style.visibility = "visible";
 
             var p = document.querySelector("#guesses div:nth-child(" + listened + ") p");
-            p.innerHTML = song;
+            p.innerHTML = songString;
             p.style.visibility = "visible";
 
             clear();
@@ -306,7 +236,7 @@ function submit(song) {
         icon.style.visibility = "visible";
 
         var p = document.querySelector("#guesses div:nth-child(" + listened + ") p");
-        p.innerHTML = song;
+        p.innerHTML = songString;
         p.style.visibility = "visible";
         
         clear();
@@ -320,7 +250,7 @@ function play() {
     time = 0; 
 
     isPlaying = true;
-    playSong(songURI); 
+    playSong(data[index].uri); 
     toggle(true);
 }
 function pause() {
