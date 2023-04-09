@@ -3,10 +3,37 @@ import {toggle, playSong } from './player.js';
 const access_token = accessToken; 
 const headers = { Authorization: `Bearer ${access_token}` };
 
-const artistName = "Måneskin";
-const searchType = "track";
-const limit = 50;
-const endpoint = `https://api.spotify.com/v1/search?q=artist:${artistName}&type=${searchType}&limit=${limit}`;
+// By Artist
+// const artistName = "Måneskin";
+// const searchType = "track";
+// const limit = 50;
+// const endpoint = `https://api.spotify.com/v1/search?q=artist:${artistName}&type=${searchType}&limit=${limit}`;
+
+// var data = [];
+// var index = -1; 
+// var song = '';
+
+// fetch(endpoint, { headers })
+//   .then((response) => response.json())
+//   .then((responseData) => {
+//     const tracks = responseData.tracks.items;
+//     tracks.forEach((track) => {
+//         const song = { titel:track.name, artist:track.artists[0].name, uri:track.uri };
+//         data.push(song);
+//     });
+
+//     index = Math.floor(Math.random() * data.length);
+//     song = data[index].titel + " - " + data[index].artist;
+
+//     // console.log(`Index: ${index}, song: ${song}`);
+
+//     document.getElementById('song').innerHTML = song;
+//   })
+//   .catch((error) => console.error(error));
+
+//By Playlist
+const playlist_id = '6noCZtPPWYRlAfYZTZL5p3';
+const endpoint = `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`;
 
 var data = [];
 var index = -1; 
@@ -15,20 +42,20 @@ var song = '';
 fetch(endpoint, { headers })
   .then((response) => response.json())
   .then((responseData) => {
-    const tracks = responseData.tracks.items;
+    const tracks = responseData.items;
     tracks.forEach((track) => {
-        const song = { titel:track.name, artist:track.artists[0].name, uri:track.uri };
+        const song = { titel:track.track.name, artist:track.track.artists[0].name, uri:track.track.uri };
         data.push(song);
     });
 
     index = Math.floor(Math.random() * data.length);
     song = data[index].titel + " - " + data[index].artist;
 
-    // console.log(`Index: ${index}, song: ${song}`);
-
     document.getElementById('song').innerHTML = song;
   })
   .catch((error) => console.error(error));
+
+// -------------------------------------------
 
 var listened = 1;
 
@@ -251,7 +278,7 @@ function play() {
     playButton.classList.remove("fa-play");
     playButton.classList.add("fa-pause");
     time = 0; 
-    
+
     isPlaying = true;
     playSong(data[index].uri); 
     toggle(true);
