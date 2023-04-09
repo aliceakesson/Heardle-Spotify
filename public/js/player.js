@@ -18,17 +18,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     // Ready
     player.addListener('ready', ({ device_id }) => {
         console.log('Ready with Device ID', device_id);
-        player.togglePlay({
-            "uris": [beggin]
-          });
-        // player.nextTrack();
-        // player.resume()
-        // .then(() => {
-        //     console.log('Playback resumed.');
-        // })
-        // .catch(error => {
-        //     console.error('Failed to resume playback:', error);
-        // });
+        pauseSong();
         printState();
     });
     
@@ -78,9 +68,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         if(play && !tempPlay) {
             restart();
             player.togglePlay();
-            printState();
         } else if(!play && tempPlay) {
-            player.togglePlay();
+            pauseSong();
         }
 
         if(listened > 6 && !hasRestarted) {
@@ -143,9 +132,27 @@ const playSong = async (uri) => {
             position_ms: 0
         })
     })
-    .then(response => console.log(`Response: ${response}`))
+    .then(response => console.log(response))
     .then(data => console.log(`Data: ${data}`))
     .catch(error => console.error(error));
+}
+
+const pauseSong = async (uri) => {
+    fetch('https://api.spotify.com/v1/me/player/pause', {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+        })
+        .then(response => {
+            if (!response.ok) {
+            throw new Error('Failed to pause song');
+            }
+            // console.log('Song restarted successfully');
+        })
+        .catch(error => {
+            console.error(error);
+    });
 }
 
 const nextSong = async () => {

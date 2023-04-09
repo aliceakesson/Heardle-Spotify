@@ -82,8 +82,9 @@ fetch(endpoint, { headers })
   })
   .catch((error) => console.error(error));
 
-// const timezone = 'spotify:track:4Tbuh5q66Ygubei5Xru4jB';
-const songURI = 'spotify:track:3Wrjm47oTz2sjIgck11l5e'; //beggin
+const timezone = 'spotify:track:4Tbuh5q66Ygubei5Xru4jB';
+const beggin = 'spotify:track:3Wrjm47oTz2sjIgck11l5e';
+const songURI = timezone; 
 
 var listened = 1;
 
