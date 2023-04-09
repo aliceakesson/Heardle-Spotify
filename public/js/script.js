@@ -5,7 +5,8 @@ const headers = { Authorization: `Bearer ${access_token}` };
 
 const artistName = "Måneskin";
 const searchType = "track";
-const endpoint = `https://api.spotify.com/v1/search?q=artist:${artistName}&type=${searchType}`;
+const limit = 50;
+const endpoint = `https://api.spotify.com/v1/search?q=artist:${artistName}&type=${searchType}&limit=${limit}`;
 
 var data = [];
 var index = -1; 
@@ -22,7 +23,9 @@ fetch(endpoint, { headers })
 
     index = Math.floor(Math.random() * data.length);
     song = data[index].titel + " - " + data[index].artist;
-    console.log(`Index: ${index}, song: ${song}`);
+
+    // console.log(`Index: ${index}, song: ${song}`);
+
     document.getElementById('song').innerHTML = song;
   })
   .catch((error) => console.error(error));
@@ -248,7 +251,7 @@ function play() {
     playButton.classList.remove("fa-play");
     playButton.classList.add("fa-pause");
     time = 0; 
-
+    
     isPlaying = true;
     playSong(data[index].uri); 
     toggle(true);
