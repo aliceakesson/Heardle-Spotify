@@ -130,34 +130,23 @@ function toggle(on) {
     play = on; 
 }
 
-/*
-fetch('https://api.spotify.com/v1/me/player/play', {
+
+const playSong = async (uri) => {
+    fetch('https://api.spotify.com/v1/me/player/play', {
         method: 'PUT',
         headers: {
             'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ uris: [uri] }),
+        body: JSON.stringify({
+            uris: [uri],
+            position_ms: 0
+        })
     })
-*/ 
-const playSong = async (uri) => {
-    console.log("Changing song to " + uri);
-    fetch(`https://api.spotify.com/v1/me/player/play?uris=${uri}`, {
-    method: 'PUT',
-    headers: {
-        'Authorization': `Bearer ${token}`
-    }
-    })
-    .then(response => {
-        if (!response.ok) {
-        throw new Error('Failed to change song');
-        }
-        console.log('Song changed successfully');
-    })
-    .catch(error => {
-        console.error(error);
-    });
-};
+    .then(response => console.log(`Response: ${response}`))
+    .then(data => console.log(`Data: ${data}`))
+    .catch(error => console.error(error));
+}
 
 const nextSong = async () => {
     fetch('https://api.spotify.com/v1/me/player/next', {
