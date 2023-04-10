@@ -14,72 +14,76 @@ var endpoint = '';
 var data = [];
 var index = -1; 
 
-switch(startupValue) {
-    case 1: // By Artist 
-        artistName = startupID;
-        searchType = "track";
-        limit = 50;
-        endpoint = `https://api.spotify.com/v1/search?q=artist:${artistName}&type=${searchType}&limit=${limit}`;
-
-        fetch(endpoint, { headers })
-        .then((response) => response.json())
-        .then((responseData) => {
-            const tracks = responseData.tracks.items;
-            tracks.forEach((track) => {
-                const trackItem = { titel:track.name, artist:track.artists[0].name, uri:track.uri };
-                data.push(trackItem);
-            });
-
-            index = Math.floor(Math.random() * data.length);
-            const song = data[index].titel + " - " + data[index].artist;
-
-            document.getElementById('song').innerHTML = song;
-
-            localStorage.setItem('uri', data[index].uri);
-            localStorage.setItem('song', song);
-        })
-        .catch((error) => console.error(error));
-        break; 
-    case 2: //By Playlist
-        limit = 100;
-        endpoint = `https://api.spotify.com/v1/playlists/${startupID}/tracks?limit=${limit}`;
-
-        fetch(endpoint, { headers })
-        .then((response) => response.json())
-        .then((responseData) => {
-            const tracks = responseData.items;
-            tracks.forEach((track) => {
-                const trackItem = { titel:track.track.name, artist:track.track.artists[0].name, uri:track.track.uri };
-                data.push(trackItem);
-            });
-
-            index = Math.floor(Math.random() * data.length);
-            const song = data[index].titel + " - " + data[index].artist;
-
-            document.getElementById('song').innerHTML = song;
-
-            localStorage.setItem('uri', data[index].uri);
-            localStorage.setItem('song', song);
-        })
-        .catch((error) => console.error(error));
-        break; 
-    case 3: //Specific song
-        endpoint = `https://api.spotify.com/v1/tracks/${startupID}`;
-
-        fetch(endpoint, { headers })
-        .then((response) => response.json())
-        .then((responseData) => {
-            const song = responseData.name + " - " + responseData.artists[0].name;
-            document.getElementById('song').innerHTML = song;
-
-            localStorage.setItem('uri', 'spotify:track:' + startupID);
-            localStorage.setItem('song', song);
-        })
-        .catch((error) => console.error(error));
-        break; 
-    default: 
-        break; 
+function newSong() {
+    switch(startupValue) {
+        case 1: // By Artist 
+            artistName = startupID;
+            searchType = "track";
+            limit = 50;
+            endpoint = `https://api.spotify.com/v1/search?q=artist:${artistName}&type=${searchType}&limit=${limit}`;
+    
+            fetch(endpoint, { headers })
+            .then((response) => response.json())
+            .then((responseData) => {
+                const tracks = responseData.tracks.items;
+                tracks.forEach((track) => {
+                    const trackItem = { titel:track.name, artist:track.artists[0].name, uri:track.uri };
+                    data.push(trackItem);
+                });
+    
+                index = Math.floor(Math.random() * data.length);
+                const song = data[index].titel + " - " + data[index].artist;
+    
+                document.getElementById('song').innerHTML = song;
+    
+                localStorage.setItem('uri', data[index].uri);
+                localStorage.setItem('song', song);
+            })
+            .catch((error) => console.error(error));
+            break; 
+        case 2: //By Playlist
+            limit = 100;
+            endpoint = `https://api.spotify.com/v1/playlists/${startupID}/tracks?limit=${limit}`;
+    
+            fetch(endpoint, { headers })
+            .then((response) => response.json())
+            .then((responseData) => {
+                const tracks = responseData.items;
+                tracks.forEach((track) => {
+                    const trackItem = { titel:track.track.name, artist:track.track.artists[0].name, uri:track.track.uri };
+                    data.push(trackItem);
+                });
+    
+                index = Math.floor(Math.random() * data.length);
+                const song = data[index].titel + " - " + data[index].artist;
+    
+                document.getElementById('song').innerHTML = song;
+    
+                localStorage.setItem('uri', data[index].uri);
+                localStorage.setItem('song', song);
+            })
+            .catch((error) => console.error(error));
+            break; 
+        case 3: //Specific song
+            endpoint = `https://api.spotify.com/v1/tracks/${startupID}`;
+    
+            fetch(endpoint, { headers })
+            .then((response) => response.json())
+            .then((responseData) => {
+                const song = responseData.name + " - " + responseData.artists[0].name;
+                document.getElementById('song').innerHTML = song;
+    
+                localStorage.setItem('uri', 'spotify:track:' + startupID);
+                localStorage.setItem('song', song);
+            })
+            .catch((error) => console.error(error));
+            break; 
+        default: 
+            break; 
+    }
 }
+
+newSong();
 
 var listened = 1;
 
@@ -103,6 +107,8 @@ var clearButton = document.querySelector('#textfield i:last-child');
 var playButton = document.querySelector('#play i');
 var skipButton = document.getElementById('skip');
 var submitButton = document.getElementById('submit');
+
+var playAgainButton = document.getElementById('playAgain');
 
 var textDiv = document.getElementById('textfield');
 var textfield = document.querySelector("#textfield textarea");
@@ -263,6 +269,8 @@ function submit(choice) {
     var songString = JSON.stringify(choice);
     songString = songString.substring(1, songString.length - 1);
 
+    const song = localStorage.getItem('song');
+
     if(songString != song) {
         if(songString != "") {
             var icon = document.querySelector("#guesses div:nth-child(" + listened + ") i");
@@ -334,11 +342,11 @@ function clear() {
 }
 
 function youWon() {
-    document.querySelector("#statsDiv p:first-child").innerHTML = "Grattis! Du vann!";
+    document.querySelector("#statsDiv p:first-child").innerHTML = "Congrats! You won!";
     showSong();
 }
 function youLost() {
-    document.querySelector("#statsDiv p:first-child").innerHTML = "Bättre lycka nästa gång!";
+    document.querySelector("#statsDiv p:first-child").innerHTML = "Better luck next time!";
     showSong();
 }
 
@@ -395,6 +403,56 @@ function showSong() {
     play();
 
     timerUntilMidnight();
+}
+
+playAgainButton.addEventListener('click', restart);
+
+function restart() {
+    listened = 1; 
+    time = 0; 
+    gameOver = false; 
+    
+    document.querySelector("#time-parts div:nth-child(2)").style.width = "6%";
+    document.querySelector("#time-parts div:nth-child(3)").style.width = "6%";
+    document.querySelector("#time-parts div:nth-child(4)").style.width = "13%";
+    document.querySelector("#time-parts div:nth-child(5)").style.width = "20%";
+    document.querySelector("#time-parts div:nth-child(6)").style.width = "25%";
+    document.querySelector("#time-parts div:nth-child(7)").style.width = "30%";
+
+    for(let i = 3; i <= 7; i++) {
+        var part = document.querySelector("#time-parts div:nth-child(" + i + ")");
+        part.style.backgroundColor = bgColor; 
+        part.style.borderColor = darkColor;
+    }
+
+    textDiv.style.visibility = "visible";
+    textDiv.style.height = "30px";
+
+    var buttons = document.getElementById("buttons");
+
+    buttons.style.visibility = "visible";
+    buttons.style.height = "50px";
+
+    var guesses = document.getElementById("guesses");
+    guesses.style.visibility = "visible";
+    guesses.style.height = "auto";
+    for(let i = 1; i <= 6; i++) {
+        var icon = document.querySelector("#guesses div:nth-child(" + i + ") i");
+        icon.style.visibility = "hidden";
+
+        var p = document.querySelector("#guesses div:nth-child(" + i + ") p");
+        p.style.visibility = "hidden";
+    }
+
+    var reveal = document.getElementById("reveal");
+    reveal.style.visibility = "hidden";
+    reveal.style.height = "0";
+
+    playButton.className = "";
+    playButton.classList.add("fa-solid");
+
+    pause();
+    newSong();
 }
 
 export { listened };

@@ -268,7 +268,7 @@ h1 {
 }
 #buttons div {
     padding: 10px;
-    text-transform: capitalize;
+    text-transform: uppercase;
     border-radius: 5px;
     font-weight: bolder;
     position: absolute;
@@ -281,6 +281,20 @@ h1 {
 #submit {
     background-color: green;
     right: 0;
+}
+
+#playAgain {
+    background-color: green;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 5px;
+    font-weight: bolder;
+    text-transform: uppercase;
+    margin-top: 20px;
+    border: none;
+    outline: none;
+    color: var(--light-color);
+    font-family: 'Courier New', Courier, monospace;
 }
 
 /*----------------------------------------------------------------------------------*/
