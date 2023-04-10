@@ -10,6 +10,7 @@ main {
 
 #select-div {
     display: flex;
+    position: relative;
     margin-top: 20px;
 }
 
@@ -17,14 +18,25 @@ select {
     margin-left: 20px;
     border: 1px solid var(--light-color);
     background-color: var(--dark-color);
+    color: var(--light-color);
+    border-radius: 10px;
+    padding: 10px 10px;
+    width: 400px;
+    font-size: 20px;
+    text-align: center;
+}
+
+option {
+    font-size: 15px;
 }
 
 button {
     margin: auto;
     background-color: green;
-    padding: 10px 15px;
+    padding: 8px 20px;
     border-radius: 10px;
     border:none;
     color: var(--light-color);
     margin-top: 20px;
+    font-size: 17px;
 }

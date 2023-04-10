@@ -6,23 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hördel</title>
     <link rel="stylesheet" type="text/css" href="../css/startup.css">
-    <script type="module" src="../js/startup.js"></script>
 </head>
 <body>
     <main>
         <div id="content">
             <h1>Hördel</h1>
             <div id="select-div">
-                <label for="select-div">Choose an alternative:</label>
                 <select id="select" name="select">
-                    <option value="alternative1">Alternative 1</option>
-                    <option value="alternative2">Alternative 2</option>
-                    <option value="alternative3">Alternative 3</option>
-                    <option value="alternative4">Alternative 4</option>
+                    <option hidden disabled selected>Choose an alternative:</option>
+                    <option value="1">By Artist</option>
+                    <option value="2">By Playlist</option>
+                    <option value="3">Specific song</option>
                 </select>
             </div>
-            <button>Done</button>
+            <button id="button">Done</button>
         </div>
     </main>
+    <script>
+        var button = document.getElementById('button');
+        var select = document.getElementById('select');
+
+        button.addEventListener("click", function() {
+            var value = parseInt(select.value); 
+            if(value > 0) {
+                console.log("yay");
+            }
+        });
+    </script>
 </body>
 </html>
