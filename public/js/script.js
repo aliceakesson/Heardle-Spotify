@@ -32,7 +32,8 @@ fetch(endpoint, { headers })
   .catch((error) => console.error(error));
 
 //By Playlist
-// const playlist_id = '3LRK928B9YNYIuRMmcaFxx'; // Swedish Schlager
+// https://open.spotify.com/playlist/0b93HVJIgG76zgJaYsEnIZ?si=63d01afe3bef4f18
+// const playlist_id = '0b93HVJIgG76zgJaYsEnIZ'; // Swedish Schlager
 // const limit = 100;
 // const endpoint = `https://api.spotify.com/v1/playlists/${playlist_id}/tracks?limit=${limit}`;
 
@@ -177,6 +178,7 @@ textfield.addEventListener('input', function() {
     
                 div.addEventListener('mousedown', function() {
                     textfield.value = div.innerHTML;
+                    textfield.value = textfield.value.replace('amp;', '');
                     clearAlternatives();
                 })
 
