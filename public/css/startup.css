@@ -4,6 +4,10 @@ body {
     overflow-y: hidden;
 }
 
+body, select, textarea, button {
+    font-family: 'Courier New', Courier, monospace;
+}
+
 main {
     display: flex;
     justify-content: center;
@@ -29,7 +33,7 @@ select, textarea {
 
 select {
     text-align: center;
-    border:none;
+    border: none;
     margin-right: 20px;
     border-radius: 10px;
     color: var(--gray-color);
@@ -45,7 +49,7 @@ option {
     color: var(--light-color);
 }
 select, option {
-    width: 300px;
+    width: 350px;
 }
 
 textarea {
