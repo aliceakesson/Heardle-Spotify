@@ -1,63 +1,85 @@
 import {toggle, playSong } from './player.js';
 
+const startupValue = parseInt(localStorage.getItem('value'));
+const startupID = localStorage.getItem('id');
+
 const access_token = accessToken; 
 const headers = { Authorization: `Bearer ${access_token}` };
 
-// By Artist
-const artistName = "Måneskin";
-const searchType = "track";
-const limit = 50;
-const endpoint = `https://api.spotify.com/v1/search?q=artist:${artistName}&type=${searchType}&limit=${limit}`;
+var artistName = ''; 
+var searchType = '';
+var limit = 20; 
+var endpoint = '';
 
 var data = [];
 var index = -1; 
-var song = '';
 
-fetch(endpoint, { headers })
-  .then((response) => response.json())
-  .then((responseData) => {
-    const tracks = responseData.tracks.items;
-    tracks.forEach((track) => {
-        const song = { titel:track.name, artist:track.artists[0].name, uri:track.uri };
-        data.push(song);
-    });
+switch(startupValue) {
+    case 1: // By Artist 
+        artistName = startupID;
+        searchType = "track";
+        limit = 50;
+        endpoint = `https://api.spotify.com/v1/search?q=artist:${artistName}&type=${searchType}&limit=${limit}`;
 
-    index = Math.floor(Math.random() * data.length);
-    song = data[index].titel + " - " + data[index].artist;
+        fetch(endpoint, { headers })
+        .then((response) => response.json())
+        .then((responseData) => {
+            const tracks = responseData.tracks.items;
+            tracks.forEach((track) => {
+                const trackItem = { titel:track.name, artist:track.artists[0].name, uri:track.uri };
+                data.push(trackItem);
+            });
 
-    // console.log(`Index: ${index}, song: ${song}`);
+            index = Math.floor(Math.random() * data.length);
+            const song = data[index].titel + " - " + data[index].artist;
 
-    document.getElementById('song').innerHTML = song;
-  })
-  .catch((error) => console.error(error));
+            document.getElementById('song').innerHTML = song;
 
-//By Playlist
-// https://open.spotify.com/playlist/0b93HVJIgG76zgJaYsEnIZ?si=63d01afe3bef4f18
-// const playlist_id = '0b93HVJIgG76zgJaYsEnIZ'; // Swedish Schlager
-// const limit = 100;
-// const endpoint = `https://api.spotify.com/v1/playlists/${playlist_id}/tracks?limit=${limit}`;
+            localStorage.setItem('uri', data[index].uri);
+            localStorage.setItem('song', song);
+        })
+        .catch((error) => console.error(error));
+        break; 
+    case 2: //By Playlist
+        limit = 100;
+        endpoint = `https://api.spotify.com/v1/playlists/${startupID}/tracks?limit=${limit}`;
 
-// var data = [];
-// var index = -1; 
-// var song = '';
+        fetch(endpoint, { headers })
+        .then((response) => response.json())
+        .then((responseData) => {
+            const tracks = responseData.items;
+            tracks.forEach((track) => {
+                const trackItem = { titel:track.track.name, artist:track.track.artists[0].name, uri:track.track.uri };
+                data.push(trackItem);
+            });
 
-// fetch(endpoint, { headers })
-//   .then((response) => response.json())
-//   .then((responseData) => {
-//     const tracks = responseData.items;
-//     tracks.forEach((track) => {
-//         const song = { titel:track.track.name, artist:track.track.artists[0].name, uri:track.track.uri };
-//         data.push(song);
-//     });
+            index = Math.floor(Math.random() * data.length);
+            const song = data[index].titel + " - " + data[index].artist;
 
-//     index = Math.floor(Math.random() * data.length);
-//     song = data[index].titel + " - " + data[index].artist;
+            document.getElementById('song').innerHTML = song;
 
-//     document.getElementById('song').innerHTML = song;
-//   })
-//   .catch((error) => console.error(error));
+            localStorage.setItem('uri', data[index].uri);
+            localStorage.setItem('song', song);
+        })
+        .catch((error) => console.error(error));
+        break; 
+    case 3: //Specific song
+        endpoint = `https://api.spotify.com/v1/tracks/${startupID}`;
 
-// -------------------------------------------
+        fetch(endpoint, { headers })
+        .then((response) => response.json())
+        .then((responseData) => {
+            const song = responseData.name + " - " + responseData.artists[0].name;
+            document.getElementById('song').innerHTML = song;
+
+            localStorage.setItem('uri', 'spotify:track:' + startupID);
+            localStorage.setItem('song', song);
+        })
+        .catch((error) => console.error(error));
+        break; 
+    default: 
+        break; 
+}
 
 var listened = 1;
 
@@ -283,7 +305,7 @@ function play() {
     time = 0; 
 
     isPlaying = true;
-    playSong(data[index].uri); 
+    playSong(localStorage.getItem('uri')); 
     toggle(true);
 }
 function pause() {

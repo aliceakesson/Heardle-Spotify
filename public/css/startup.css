@@ -1,5 +1,9 @@
 @import 'design.css';
 
+body {
+    overflow-y: hidden;
+}
+
 main {
     display: flex;
     justify-content: center;
@@ -12,23 +16,53 @@ main {
     display: flex;
     position: relative;
     margin-top: 20px;
+    border: 1px solid var(--light-color);
+    border-radius: 10px;
+}
+
+select, textarea {
+    background-color: var(--dark-color);
+    padding: 15px 10px;
+    font-size: 20px;
+    color: var(--light-color);
 }
 
 select {
-    margin-left: 20px;
-    border: 1px solid var(--light-color);
-    background-color: var(--dark-color);
-    color: var(--light-color);
-    border-radius: 10px;
-    padding: 10px 10px;
-    width: 400px;
-    font-size: 20px;
     text-align: center;
+    border:none;
+    margin-right: 20px;
+    border-radius: 10px;
+    color: var(--gray-color);
+}
+select:focus {
+    border: none;
+    outline: none;
 }
 
 option {
-    font-size: 15px;
+    font-size: 18px;
+    padding: 10px 20px;
+    color: var(--light-color);
 }
+select, option {
+    width: 300px;
+}
+
+textarea {
+    outline: none;
+    border-top: none;
+    border-bottom: none;
+    border-right: none;
+    border-radius: 0 10px 10px 0;
+    resize: none;
+    width: 300px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding-left: 30px;
+}
+
 
 button {
     margin: auto;

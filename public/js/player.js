@@ -4,8 +4,12 @@ var play = false;
 var tempPlay = false; 
 var hasRestarted = false; 
 
-const timezone = 'spotify:track:4Tbuh5q66Ygubei5Xru4jB';
-const beggin = 'spotify:track:3Wrjm47oTz2sjIgck11l5e';
+/**
+ * timezone: 4Tbuh5q66Ygubei5Xru4jB
+ * beggin: 3Wrjm47oTz2sjIgck11l5e
+ * vibes playlist: 6noCZtPPWYRlAfYZTZL5p3
+ */
+
 const token = accessToken;
 
 window.onSpotifyWebPlaybackSDKReady = () => {
@@ -23,7 +27,12 @@ window.onSpotifyWebPlaybackSDKReady = () => {
                 'Authorization': 'Bearer ' + token
             }
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch data from API');
+            }
+            return response.json();
+        })
         .then(data => {
             if (data.is_playing) {
                 pauseSong();
@@ -157,9 +166,8 @@ const pauseSong = async (uri) => {
         })
         .then(response => {
             if (!response.ok) {
-            throw new Error('Failed to pause song');
+                throw new Error('Failed to pause song');
             }
-            // console.log('Song paused successfully');
         })
         .catch(error => {
             console.error(error);

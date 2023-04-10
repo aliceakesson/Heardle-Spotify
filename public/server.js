@@ -1,6 +1,5 @@
 const express = require('express'); // Express web server framework
 const request = require('request'); // "Request" library
-const cors = require('cors');
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
 const path = require('path');
@@ -35,7 +34,7 @@ app.use(express.static(__dirname))
   .use(cookieParser());
 
 app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname + '/views/index.html'));
+    res.sendFile(path.join(__dirname + '/views/startup.html'));
 });
 
 app.get('/login', function(req, res) {
