@@ -7,8 +7,10 @@
         <script src="https://kit.fontawesome.com/4ce1eac851.js" crossorigin="anonymous"></script>
         <script src="https://sdk.scdn.co/spotify-player.js"></script>
         <script src="https://unpkg.com/spotify-web-api-js"></script>
-        <script type="module" src="/js/script.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script type="module" src="/js/player.js"></script>
+        <script type="module" src="/js/script.js"></script>
+        <script type="module" src="/js/startup.js"></script>
         <script id="access-token">var accessToken = "";</script>
     </head>
     <body>
@@ -43,9 +45,9 @@
                 </div>
             </section>
             <section id="reveal">
-                <p id="song">Fångad av en stormvind - Carola</p>
+                <p id="song">[Song] - [artist]</p>
                 <div id="statsDiv">
-                    <p>Bättre lycka nästa gång!</p>
+                    <p>Better luck next time!</p>
                     <div id="stats">
                         <div></div>
                         <div></div>
@@ -56,9 +58,10 @@
                     </div>
                 </div>
                 <div id="timeDiv">
-                    <p>Nästa hördel om:</p>
+                    <p>Next hördel in:</p>
                     <p>00:00:00</p>
                 </div>
+                <button id="playAgain">Play again</button>
             </section>
             <section id="bottom">
                 <div id="time">
@@ -92,4 +95,8 @@
                 </div>
             </section>
         </main>
+        <div style="visibility: hidden;"> <!-- just a few fixes for bug reasons -->
+            <button id="button"></button>
+            <select id="select"></select>
+        </div>
 </body></html>
