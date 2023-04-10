@@ -1,0 +1,30 @@
+@import 'design.css';
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: var(--light-color);
+}
+
+#select-div {
+    display: flex;
+    margin-top: 20px;
+}
+
+select {
+    margin-left: 20px;
+    border: 1px solid var(--light-color);
+    background-color: var(--dark-color);
+}
+
+button {
+    margin: auto;
+    background-color: green;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border:none;
+    color: var(--light-color);
+    margin-top: 20px;
+}
