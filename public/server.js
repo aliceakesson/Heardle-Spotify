@@ -35,7 +35,7 @@ app.use(express.static(__dirname))
   .use(cookieParser());
 
 app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname + '/views/index.html'));
+    res.sendFile(path.join(__dirname + '/views/startup.html'));
 });
 
 app.get('/login', function(req, res) {
