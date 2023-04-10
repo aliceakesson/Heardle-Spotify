@@ -448,6 +448,14 @@ function restart() {
     reveal.style.visibility = "hidden";
     reveal.style.height = "0";
 
+    for(let i = 1; i <= 6; i++) {
+        var part = document.querySelector("#stats div:nth-child(" + i + ")");
+        var icon = document.querySelector("#guesses div:nth-child(" + i + ") i");
+
+        icon.classList = "";
+        part.style.backgroundColor = darkerColor; 
+    }
+
     playButton.className = "";
     playButton.classList.add("fa-solid");
 
