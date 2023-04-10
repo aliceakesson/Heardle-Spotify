@@ -15,7 +15,7 @@ button.addEventListener("click", function() {
         startupValue = parseInt(select.value); 
         startupID = textarea.value; 
 
-        if(startupValue > 0 && startupID.length > 0) {
+        if((startupValue > 0 && startupID.length > 0) || startupValue == 4) {
             newPage = true; 
 
             localStorage.setItem("value", startupValue);
@@ -30,17 +30,21 @@ select.addEventListener("change", function() {
     if(!newPage) {
         if(!chosen) {
             select.style.color = "#ddd";
-            textarea.disabled = false; 
             chosen = true;
         }
 
         textarea.value = "";
+        textarea.disabled = false; 
+
         if(select.value == 1) {
             textarea.placeholder = "Enter artist name";
         } else if(select.value == 2) {
             textarea.placeholder = "Enter the playlist id";
-        } else {
+        } else if(select.value == 3) {
             textarea.placeholder = "Enter the track id";
+        } else {
+            textarea.placeholder = "";
+            textarea.disabled = true; 
         }
     }
 })

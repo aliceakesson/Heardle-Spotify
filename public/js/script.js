@@ -15,6 +15,14 @@ var data = [];
 var index = -1; 
 
 function newSong() {
+    artistName = ''; 
+    searchType = '';
+    limit = 20; 
+    endpoint = '';
+
+    data = [];
+    index = -1; 
+
     switch(startupValue) {
         case 1: // By Artist 
             artistName = startupID;
@@ -74,6 +82,29 @@ function newSong() {
                 document.getElementById('song').innerHTML = song;
     
                 localStorage.setItem('uri', 'spotify:track:' + startupID);
+                localStorage.setItem('song', song);
+            })
+            .catch((error) => console.error(error));
+            break; 
+        case 4: 
+            limit = 50;
+            endpoint = `https://api.spotify.com/v1/me/top/tracks?limit=${limit}`;
+    
+            fetch(endpoint, { headers })
+            .then((response) => response.json())
+            .then((responseData) => {
+                const tracks = responseData.items;
+                tracks.forEach((track) => {
+                    const trackItem = { titel:track.name, artist:track.artists[0].name, uri:track.uri };
+                    data.push(trackItem);
+                });
+    
+                index = Math.floor(Math.random() * data.length);
+                const song = data[index].titel + " - " + data[index].artist;
+    
+                document.getElementById('song').innerHTML = song;
+    
+                localStorage.setItem('uri', data[index].uri);
                 localStorage.setItem('song', song);
             })
             .catch((error) => console.error(error));
