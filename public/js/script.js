@@ -410,6 +410,36 @@ function showSong() {
     
     playButton.className = "";
     playButton.classList.add("fa-solid");
+    
+    fetch('https://api.spotify.com/v1/me/player', {
+    headers: {
+        'Authorization': `Bearer ${access_token}`
+    }
+    })
+    .then(response => {
+        if (!response.ok) {
+        throw new Error('Failed to get current playback state');
+        }
+        return response.json();
+    })
+    .then(data => {
+        const duration = data.item.duration_ms; 
+        const secondsTotal = parseInt(duration / 1000);
+        const minutes = parseInt(secondsTotal / 60);
+        const seconds = parseInt(secondsTotal - (minutes * 60));
+
+        var timeP = document.querySelector('#play p:last-child');
+
+        var secondsString = seconds + "";
+        if(seconds < 10)
+            secondsString = "0" + seconds;
+
+        timeP.innerHTML = minutes + ":" + secondsString;
+        endTime = secondsTotal; 
+    })
+    .catch(error => {
+        console.error(error);
+    });
 
     fetch('https://api.spotify.com/v1/me/player', {
     headers: {
@@ -456,7 +486,11 @@ function restart() {
     endTime = 16;
     var timeP = document.querySelector('#play p:last-child');
     timeP.innerHTML = "0:16";
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> c62544d22863f619efbf6e5853c3ecc568cfbdd4
     document.querySelector("#time-parts div:nth-child(2)").style.width = "6%";
     document.querySelector("#time-parts div:nth-child(3)").style.width = "6%";
     document.querySelector("#time-parts div:nth-child(4)").style.width = "13%";
