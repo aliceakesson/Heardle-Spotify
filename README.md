@@ -4,7 +4,7 @@
 
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://github.com/aliceakesson/Heardle-Spotify/">
     <img src="public/icon.png" alt="Logo" width="80" height="80">
   </a>
 
