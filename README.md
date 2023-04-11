@@ -22,7 +22,11 @@
 This is another version of heardle made completely by me, wherein the user can choose freely regarding choice of song. For example: song by artist, song by playlist och a song from the user's top songs.
 </p>
 
-### Built With
+## Requirements
+
+Sadly, this project requires the user to have some sort of Spotify Premium membership. This is because, as for now, you will need to start your own Spotify Application to play it (more about this in the installation guide further down).
+
+## Built With
 
 <p>
 The site runs on a local host, made using Node.js. Further, it's built using Spotify's Web API and the Spotify Web Playback SDK, where the user will have to authenticate using <a href="https://datatracker.ietf.org/doc/html/rfc6749">OAuth 2.0</a>. 
@@ -34,9 +38,19 @@ The site runs on a local host, made using Node.js. Further, it's built using Spo
 * [![CSS][css-shield]][css-url]
 
 
-### Installation
+## Installation
 
-Start with downloading and extracting the zip-file. The application requires you to run it on a local server (this is done using Node.js and nodemon), thus you will therefore afterwards have to download these. In the your terminal, go to the directory of the project and then go to the folder named 'public' using this command: 
+As mentioned in the requirements, you will first need to create your own Spotify Application. This is easily done through <a href="https://developer.spotify.com/dashboard">the Spotify Dashboard</a>. The steps are as following: 
+
+1. Click on "Create app"
+2. Give the app a name (any) and a short description
+3. Enter 'http://localhost:8888/callback' for the redirect URL
+4. Check the terms of service box 
+5. Click on "Save"
+
+Now, proceed to download and extract the zip-file of the project. Open the project any editor and locate the environment-file (.env) which is located in the 'public' folder. The values for CLIENT_ID and CLIENT_SECRET can be found by clicking on the settings of your Spotify Application (The client secret will be visible by clicking on "View client secret"). Enter these values for their respective variables in the environment.   
+
+The application requires you to run it on a local server (this is done using Node.js and nodemon), thus you will therefore afterwards have to download these. In the your terminal, go to the directory of the project and then go to the folder named 'public' using this command: 
 
 ```sh
   cd public
@@ -51,7 +65,7 @@ After that, install npm and nodemon in the current folder using the following tw
   npm install -g nodemon
   ```
   
- The application should thne be playable by calling the command to start the server, then open up the server in your browser of choice at <a>http://localhost:8888</a>.
+ If everything goes well, the application should then be playable by calling the command to start the server, then open up the server in your browser of choice at <a>http://localhost:8888</a>.
  
  ```sh
   nodemon server.js
