@@ -24,7 +24,7 @@ This is another version of heardle made completely by me, wherein the user can c
 
 <br><br>
 
-<div style="display: flex;justify-content: center;align-items: center;">
+<div style="display: flex;justify-content: center;align-items: center;margin:auto">
   <img src="https://user-images.githubusercontent.com/91065258/231267216-1965ff1b-522f-48c2-8547-0763d472e100.png" style="width:45%">
   <img src="https://user-images.githubusercontent.com/91065258/231267239-c5100193-34b0-455d-9496-87c140602f44.png" style="width:45%">
 </div>
