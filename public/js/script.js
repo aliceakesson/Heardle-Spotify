@@ -131,7 +131,7 @@ const bgColor = "#111";
 const darkerColor = "#222";
 
 const timeWidth = 700; 
-const endTime = 16; 
+var endTime = 16; 
 const alternativesLimit = 7; 
 
 var clearButton = document.querySelector('#textfield i:last-child');
@@ -200,26 +200,6 @@ function timerUntilMidnight() {
         var timer = document.querySelector("#timeDiv p:last-child");
         timer.innerHTML = hours + ":" + minutes + ":" + seconds;
     }
-}
-
-function getPosition() {
-    fetch('https://api.spotify.com/v1/me/player', {
-    headers: {
-        'Authorization': `Bearer ${access_token}`
-    }
-    })
-    .then(response => {
-        if (!response.ok) {
-        throw new Error('Failed to get current playback state');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log(`Current position in song: ${data.progress_ms} ms`);
-    })
-    .catch(error => {
-        console.error(error);
-    });
 }
 
 textfield.addEventListener('input', function() {
@@ -431,6 +411,36 @@ function showSong() {
     playButton.className = "";
     playButton.classList.add("fa-solid");
 
+    fetch('https://api.spotify.com/v1/me/player', {
+    headers: {
+        'Authorization': `Bearer ${access_token}`
+    }
+    })
+    .then(response => {
+        if (!response.ok) {
+        throw new Error('Failed to get current playback state');
+        }
+        return response.json();
+    })
+    .then(data => {
+        const duration = data.item.duration_ms; 
+        const secondsTotal = parseInt(duration / 1000);
+        const minutes = parseInt(secondsTotal / 60);
+        const seconds = parseInt(secondsTotal - (minutes * 60));
+
+        var timeP = document.querySelector('#play p:last-child');
+
+        var secondsString = seconds + "";
+        if(seconds < 10)
+            secondsString = "0" + seconds;
+
+        timeP.innerHTML = minutes + ":" + secondsString;
+        endTime = secondsTotal; 
+    })
+    .catch(error => {
+        console.error(error);
+    });
+
     play();
 
     timerUntilMidnight();
@@ -443,6 +453,10 @@ function restart() {
     time = 0; 
     gameOver = false; 
     
+    endTime = 16;
+    var timeP = document.querySelector('#play p:last-child');
+    timeP.innerHTML = "0:16";
+
     document.querySelector("#time-parts div:nth-child(2)").style.width = "6%";
     document.querySelector("#time-parts div:nth-child(3)").style.width = "6%";
     document.querySelector("#time-parts div:nth-child(4)").style.width = "13%";
