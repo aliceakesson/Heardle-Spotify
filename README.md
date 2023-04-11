@@ -22,6 +22,15 @@
 This is another version of heardle made completely by me, wherein the user can choose freely regarding choice of song. For example: song by artist, song by playlist och a song from the user's top songs.
 </p>
 
+<br><br>
+
+<div>
+  <img src="https://user-images.githubusercontent.com/91065258/231267216-1965ff1b-522f-48c2-8547-0763d472e100.png" style="width:500px">
+  <img src="https://user-images.githubusercontent.com/91065258/231267239-c5100193-34b0-455d-9496-87c140602f44.png" style="width:500px">
+</div>
+
+<br><br>
+
 ## Requirements
 
 Sadly, this project requires the user to have some sort of Spotify Premium membership. This is because, as for now, you will need to start your own Spotify Application to play it (more about this in the installation guide further down).
