@@ -253,7 +253,7 @@ skipButton.addEventListener('click', function() {
     icon.style.visibility = "visible";
 
     var p = document.querySelector("#guesses div:nth-child(" + listened + ") p");
-    p.innerHTML = "SKIPPAD";
+    p.innerHTML = "SKIPPED";
     p.style.visibility = "visible";
 
     if(listened < 6)
@@ -486,11 +486,7 @@ function restart() {
     endTime = 16;
     var timeP = document.querySelector('#play p:last-child');
     timeP.innerHTML = "0:16";
-<<<<<<< HEAD
-
-=======
     
->>>>>>> c62544d22863f619efbf6e5853c3ecc568cfbdd4
     document.querySelector("#time-parts div:nth-child(2)").style.width = "6%";
     document.querySelector("#time-parts div:nth-child(3)").style.width = "6%";
     document.querySelector("#time-parts div:nth-child(4)").style.width = "13%";
