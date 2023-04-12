@@ -63,6 +63,8 @@ Now, proceed to download and extract the zip-file of the project. Open the proje
 
 The application requires you to run it on a local server (this is done using Node.js and nodemon), thus you will therefore afterwards have to download these. In the your terminal, go to the directory of the project and then go to the folder named 'public' using this command: 
 
+> **Note:** The following terminal commands are based off of the Windows terminal. Commands may vary depending on the operative system.
+
 ```sh
   cd public
   ```  
