@@ -4,7 +4,7 @@
 
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://github.com/aliceakesson/Heardle-Spotify/">
     <img src="public/icon.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -24,9 +24,9 @@ This is another version of heardle made completely by me, wherein the user can c
 
 <br><br>
 
-<div>
-  <img src="https://user-images.githubusercontent.com/91065258/231267216-1965ff1b-522f-48c2-8547-0763d472e100.png" style="width:500px">
-  <img src="https://user-images.githubusercontent.com/91065258/231267239-c5100193-34b0-455d-9496-87c140602f44.png" style="width:500px">
+<div style="display: flex;justify-content: center;align-items: center;margin:auto">
+  <img src="https://user-images.githubusercontent.com/91065258/231267216-1965ff1b-522f-48c2-8547-0763d472e100.png" style="width:45%">
+  <img src="https://user-images.githubusercontent.com/91065258/231267239-c5100193-34b0-455d-9496-87c140602f44.png" style="width:45%">
 </div>
 
 <br><br>
@@ -66,6 +66,8 @@ The application requires you to run it on a local server (this is done using Nod
 ```sh
   cd public
   ```  
+> **Note:** This command is based off of the Windows terminal. It may vary depending on the operative system.
+
 After that, install npm and nodemon in the current folder using the following two commands: 
 
 ```sh
