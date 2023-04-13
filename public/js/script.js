@@ -347,19 +347,42 @@ document.addEventListener('click', function(e) {
     const startY = rect.top + window.pageYOffset; 
 
     var timerWidth = 0; 
-    for(let i = 1; i <= listened; i++) {
-        timerWidth += document.querySelector(`#time-parts div:nth-child(${i + 1})`).offsetWidth;
-    }
-
-    if(gameOver)
-        timerWidth = timer.offsetWidth;
+    if(!gameOver) {
+        for(let i = 1; i <= listened; i++) {
+            timerWidth += document.querySelector(`#time-parts div:nth-child(${i + 1})`).offsetWidth;
+        }
+    } else timerWidth = timer.offsetWidth;
 
     const endX = startX + timerWidth;
     const endY = startY + timer.offsetHeight; 
     
     const inTimer = e.clientX >= startX && e.clientX <= endX && e.clientY >= startY && e.clientY <= endY;
 
-    console.log(`inTimer: ${inTimer}`);
+    if(inTimer) {
+        var partOfTimer = (e.clientX - startX)/(timer.offsetWidth);
+        var inMilliSeconds = parseInt(endTime * partOfTimer * 1000); 
+
+        if(!isPlaying) 
+            play();
+
+        time = inMilliSeconds / 10;
+
+        fetch(`https://api.spotify.com/v1/me/player/seek?position_ms=${inMilliSeconds}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${access_token}`
+            }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to change song position');
+                }
+
+            })
+            .catch(error => {
+                console.error(error);
+        });
+    }
 
     // console.log(`startX: ${startX}, startY: ${startY}, endX: ${endX}, endY: ${endY}`);
 });
