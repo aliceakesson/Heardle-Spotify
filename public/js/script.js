@@ -246,6 +246,40 @@ function newSong() {
             })
             .catch((error) => console.error(error));
             break; 
+        case 7: //My liked songs
+            limit = 50;
+            endpoint = `https://api.spotify.com/v1/me/tracks?limit=${limit}`;
+    
+            fetch(endpoint, { headers })
+            .then((response) => response.json())
+            .then((responseData) => {
+                const tracks = responseData.items;
+                tracks.forEach((track) => {
+                    const trackItem = { titel:track.track.name, artist:track.track.artists[0].name, uri:track.track.uri };
+                    if(!data.some(trackItem2 => trackItem2.titel == trackItem.titel)) {
+                        data.push(trackItem);
+                    }
+                });
+    
+                const lastItems = recent.length > probabilityLimit ? recent.slice(-probabilityLimit) : recent;
+                var k = whileMargin; 
+
+                do {
+                    index = Math.floor(Math.random() * data.length);
+                    const song = data[index].titel + " - " + data[index].artist;
+        
+                    document.getElementById('song').innerHTML = song;
+        
+                    localStorage.setItem('uri', data[index].uri);
+                    localStorage.setItem('song', song);
+                    
+                    k++;
+                } while(!lastItems.some(item => item.titel == data[index].titel) && k < whileMargin)
+
+                recent.push(data[index]);
+            })
+            .catch((error) => console.error(error));
+            break; 
         default: 
             break; 
     }
