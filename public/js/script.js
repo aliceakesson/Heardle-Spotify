@@ -287,6 +287,23 @@ function newSong() {
 
 newSong();
 
+/* LOGIN USER */ 
+
+var userImg = document.querySelector('#user img');
+var userText = document.querySelector('#user p:last-child');
+
+endpoint = `https://api.spotify.com/v1/me/`;
+    
+fetch(`https://api.spotify.com/v1/me/`, { headers })
+.then((response) => response.json())
+.then((responseData) => {
+    userImg.src = responseData.images[0].url;
+    userText.innerHTML = responseData.display_name; 
+})
+.catch((error) => console.error(error));
+
+/* ------------------------- */
+
 var listened = 1;
 
 var time = 0; 

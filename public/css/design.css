@@ -5,6 +5,44 @@
     --gray-color: #666;
 }
 
+#user {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: #222;
+    border-radius: 5px;
+    display: flex;
+    margin: 10px;
+    width: 180px;
+}
+
+#user img {
+    width: 50px;
+    height: 50px;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+#user div {
+    /* color: var(--dark-color); */
+    font-weight: bold;
+    text-align: left;
+    height: auto;
+    margin: 0 auto;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#user div p:first-child {
+    color: #666;
+    margin-top: 15px;
+    font-weight: normal;
+}
+#user div p:last-child {
+    margin-top: -15px;
+}
+
+/* --------------------------------------------------- */
+
 body {
     background: var(--dark-color);
     color: var(--light-color);
