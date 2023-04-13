@@ -289,6 +289,8 @@ setInterval(run, 10);
 setInterval(timerUntilMidnight, 1000);
 document.querySelector("#play p:last-child").innerHTML = "0:" + endTime;
 
+var streak = 0; 
+
 function run() {
     if(isPlaying) {
         var maxWidth = 0;
@@ -566,10 +568,20 @@ function clear() {
 
 function youWon() {
     document.querySelector("#statsDiv p:first-child").innerHTML = "Congrats! You won!";
+
+    streak++;
+    var streakElement = document.getElementById('streak');
+    streakElement.innerHTML = "STREAK: " + streak;
+
     showSong();
 }
 function youLost() {
     document.querySelector("#statsDiv p:first-child").innerHTML = "Better luck next time!";
+
+    streak = 0; 
+    var streakElement = document.getElementById('streak');
+    streakElement.innerHTML = "STREAK: " + streak;
+
     showSong();
 }
 
