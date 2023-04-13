@@ -505,6 +505,11 @@ function revealMore() {
 
         var prePart = document.querySelector("#time-parts div:nth-child(" + listened + ")");
         prePart.style.borderColor = bgColor; 
+
+        if(listened < 6)
+            skipButton.innerHTML = `SKIP (+${listened}s)`;
+        else 
+            skipButton.innerHTML = "SKIP";
     }
 }
 
@@ -647,12 +652,12 @@ function restart() {
     var timeP = document.querySelector('#play p:last-child');
     timeP.innerHTML = "0:16";
     
-    document.querySelector("#time-parts div:nth-child(2)").style.width = "6%";
-    document.querySelector("#time-parts div:nth-child(3)").style.width = "6%";
-    document.querySelector("#time-parts div:nth-child(4)").style.width = "13%";
-    document.querySelector("#time-parts div:nth-child(5)").style.width = "20%";
+    document.querySelector("#time-parts div:nth-child(2)").style.width = "6.25%";
+    document.querySelector("#time-parts div:nth-child(3)").style.width = "6.25%";
+    document.querySelector("#time-parts div:nth-child(4)").style.width = "12.5%";
+    document.querySelector("#time-parts div:nth-child(5)").style.width = "18.75%";
     document.querySelector("#time-parts div:nth-child(6)").style.width = "25%";
-    document.querySelector("#time-parts div:nth-child(7)").style.width = "30%";
+    document.querySelector("#time-parts div:nth-child(7)").style.width = "31.25%";
 
     for(let i = 3; i <= 7; i++) {
         var part = document.querySelector("#time-parts div:nth-child(" + i + ")");
