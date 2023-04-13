@@ -272,6 +272,16 @@ function run() {
             time += 1; 
             var newWidth = (time / (endTime * 100)) * 100;
             timeObject.style.width = newWidth + "%";
+
+            const totalSeconds = parseInt(time / 100);
+            const minutes = parseInt(totalSeconds / 60);
+            const seconds = totalSeconds - (minutes * 60);
+
+            var secondsString = seconds + "";
+            if(seconds < 10)
+                secondsString = "0" + seconds;
+
+            document.querySelector("#play p:first-child").innerHTML = minutes + ":" + secondsString;
         } else {
             pause();
         }
@@ -491,6 +501,8 @@ function pause() {
     playButton.classList.remove("fa-pause");
     playButton.classList.add("fa-play");
     timeObject.style.width = "0";
+    
+    document.querySelector("#play p:first-child").innerHTML = "0:00";
 
     isPlaying = false; 
     toggle(false);
@@ -530,6 +542,7 @@ function showSong() {
     listened++;
 
     gameOver = true; 
+    giveUpButton.style.visibility = "hidden";
 
     for(let i = 3; i <= 7; i++) {
         var part = document.querySelector("#time-parts div:nth-child(" + i + ")");
@@ -647,6 +660,7 @@ function restart() {
     listened = 1; 
     time = 0; 
     gameOver = false; 
+    giveUpButton.style.visibility = "visible";
     
     endTime = 16;
     var timeP = document.querySelector('#play p:last-child');
