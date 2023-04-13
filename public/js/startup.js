@@ -37,10 +37,12 @@ select.addEventListener("change", function() {
         textarea.disabled = false; 
 
         if(select.value == 1) {
-            textarea.placeholder = "Enter artist name";
+            textarea.placeholder = "Enter artist by name";
         } else if(select.value == 2) {
-            textarea.placeholder = "Enter the playlist id";
+            textarea.placeholder = "Enter artist by id"; 
         } else if(select.value == 3) {
+            textarea.placeholder = "Enter the playlist id";
+        } else if(select.value == 4) {
             textarea.placeholder = "Enter the track id";
         } else {
             textarea.placeholder = "";

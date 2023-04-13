@@ -24,7 +24,7 @@ function newSong() {
     index = -1; 
 
     switch(startupValue) {
-        case 1: // By Artist 
+        case 1: // By Artist (Name)
             artistName = startupID;
             searchType = "track";
             limit = 50;
@@ -49,7 +49,65 @@ function newSong() {
             })
             .catch((error) => console.error(error));
             break; 
-        case 2: //By Playlist
+        case 2: // By Artist (ID)
+            endpoint = `https://api.spotify.com/v1/artists/${startupID}/albums?market=US&limit=50`;
+            
+            fetch(endpoint, { headers })
+                .then((response) => response.json())
+                .then((responseData) => {
+                    const albums = responseData.items;
+                    const promises = [];
+
+                    albums.forEach((album) => {
+                        if(album.album_group != "appears_on") {
+                            const endpoint2 = `https://api.spotify.com/v1/albums/${album.id}/tracks`;
+
+                            localStorage.setItem('tracks',  JSON.stringify([]));
+
+                            const promise = fetch(endpoint2, { headers })
+                                .then((response2) => response2.json())
+                                .then((responseData2) => {
+                                const tracks = responseData2.items;
+                                const temp = JSON.parse(localStorage.getItem('tracks'));
+                                tracks.forEach((track) => {
+                                    const trackItem = { titel:track.name, artist:track.artists[0].name, uri:track.uri };
+                                    if(!temp.some(trackItem2 => trackItem2.titel == trackItem.titel)) {
+                                        temp.push(trackItem);
+                                    }
+                                });
+                                localStorage.setItem('tracks', JSON.stringify(temp));
+                                })
+                                .catch((error2) => console.error(error2));
+
+                            promises.push(promise);
+                        }
+                    });
+
+                    Promise.all(promises)
+                        .then(() => {
+                            const tracks = JSON.parse(localStorage.getItem('tracks'));
+                            tracks.forEach((track) => {
+                            data.push(track);
+                            });
+                            console.log(data);
+
+                            index = Math.floor(Math.random() * data.length);
+
+                            console.log(`index: ${index}, length: ${data.length}`);
+
+                            const song = data[index].titel + " - " + data[index].artist;
+
+                            document.getElementById('song').innerHTML = song;
+
+                            localStorage.setItem('uri', data[index].uri);
+                            localStorage.setItem('song', song);
+                        })
+                        .catch((error) => console.error(error));
+                })
+                .catch((error) => console.error(error));
+
+            break; 
+        case 3: //By Playlist
             limit = 100;
             endpoint = `https://api.spotify.com/v1/playlists/${startupID}/tracks?limit=${limit}`;
     
@@ -72,7 +130,7 @@ function newSong() {
             })
             .catch((error) => console.error(error));
             break; 
-        case 3: //Specific song
+        case 4: //Specific song
             endpoint = `https://api.spotify.com/v1/tracks/${startupID}`;
     
             fetch(endpoint, { headers })
@@ -86,7 +144,7 @@ function newSong() {
             })
             .catch((error) => console.error(error));
             break; 
-        case 4: 
+        case 5: 
             limit = 50;
             endpoint = `https://api.spotify.com/v1/me/top/tracks?limit=${limit}`;
     
