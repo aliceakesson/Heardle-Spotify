@@ -202,6 +202,8 @@ var clearButton = document.querySelector('#textfield i:last-child');
 var playButton = document.querySelector('#play i');
 var skipButton = document.getElementById('skip');
 var submitButton = document.getElementById('submit');
+var giveUpButton = document.getElementById('give-up');
+var backToMenuButton = document.getElementById('back-to-menu');
 
 var playAgainButton = document.getElementById('playAgain');
 
@@ -213,7 +215,6 @@ var timeObject = document.getElementById('currentTime');
 setInterval(run, 10);
 setInterval(timerUntilMidnight, 1000);
 document.querySelector("#play p:last-child").innerHTML = "0:" + endTime;
-
 
 function run() {
     if(isPlaying) {
@@ -330,6 +331,15 @@ submitButton.addEventListener('click', function() {
     var song = textfield.value; 
     clearAlternatives();
     submit(song);
+});
+
+giveUpButton.addEventListener('click', function() {
+    youLost();
+});
+
+backToMenuButton.addEventListener('click', function() {
+    pause();
+    window.location.href = "/";
 });
 
 textfield.addEventListener('focus', function() {

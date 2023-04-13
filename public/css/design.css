@@ -16,6 +16,46 @@ h1 {
     margin: 0 auto;
 }
 
+#title-div {
+    display: flex;
+    position: relative;
+}
+
+#title-div div {
+    padding: 10px;
+    text-transform: uppercase;
+    border-radius: 5px;
+    font-weight: bolder;
+    position: absolute;
+}
+
+#give-up {
+    background-color: rgb(137, 12, 12);
+    left: 0;
+}
+
+#back-to-menu {
+    background-color: var(--gray-color);
+    right: 0;
+}
+
+/*
+#buttons {
+    position: relative;
+    width: 700px;
+    margin: auto;
+    height: 50px;
+}
+#buttons div {
+    padding: 10px;
+    text-transform: uppercase;
+    border-radius: 5px;
+    font-weight: bolder;
+    position: absolute;
+    bottom: 0;
+}
+*/
+
 /*----------------------------------------------------------------------------------*/
 
 #top {
