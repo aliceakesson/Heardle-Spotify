@@ -501,7 +501,7 @@ function pause() {
     playButton.classList.remove("fa-pause");
     playButton.classList.add("fa-play");
     timeObject.style.width = "0";
-    
+
     document.querySelector("#play p:first-child").innerHTML = "0:00";
 
     isPlaying = false; 
@@ -665,6 +665,8 @@ function restart() {
     endTime = 16;
     var timeP = document.querySelector('#play p:last-child');
     timeP.innerHTML = "0:16";
+
+    skipButton.innerHTML = "SKIP (+1s)";
     
     document.querySelector("#time-parts div:nth-child(2)").style.width = "6.25%";
     document.querySelector("#time-parts div:nth-child(3)").style.width = "6.25%";
