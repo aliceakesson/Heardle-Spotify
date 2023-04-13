@@ -163,7 +163,42 @@ function newSong() {
             })
             .catch((error) => console.error(error));
             break; 
-        case 4: //Specific song
+        case 4: //By Album 
+            endpoint = `https://api.spotify.com/v1/albums/${startupID}/tracks`;
+
+            fetch(endpoint, { headers })
+            .then((response) => response.json())
+            .then((responseData) => {
+                const tracks = responseData.items;
+                tracks.forEach((track) => {
+                    const trackItem = { titel:track.name, artist:track.artists[0].name, uri:track.uri };
+                    if(!data.some(trackItem2 => trackItem2.titel == trackItem.titel)) {
+                        data.push(trackItem);
+                    }
+                });
+                
+                const albumProbabilityLimit = 3; 
+                const lastItems = recent.length > albumProbabilityLimit ? recent.slice(-albumProbabilityLimit) : recent;
+                var k = whileMargin; 
+
+                do {
+                    index = Math.floor(Math.random() * data.length);
+                    const song = data[index].titel + " - " + data[index].artist;
+        
+                    document.getElementById('song').innerHTML = song;
+        
+                    localStorage.setItem('uri', data[index].uri);
+                    localStorage.setItem('song', song);
+                    
+                    k++;
+                } while(!lastItems.some(item => item.titel == data[index].titel) && k < whileMargin)
+
+                recent.push(data[index]);
+
+            })
+            .catch((error) => console.error(error));
+            break; 
+        case 5: //Specific song
             endpoint = `https://api.spotify.com/v1/tracks/${startupID}`;
     
             fetch(endpoint, { headers })
@@ -177,7 +212,7 @@ function newSong() {
             })
             .catch((error) => console.error(error));
             break; 
-        case 5: 
+        case 6: 
             limit = 50;
             endpoint = `https://api.spotify.com/v1/me/top/tracks?limit=${limit}`;
     

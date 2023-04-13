@@ -15,7 +15,7 @@ button.addEventListener("click", function() {
         startupValue = parseInt(select.value); 
         startupID = textarea.value; 
 
-        if((startupValue > 0 && startupID.length > 0) || startupValue == 5) {
+        if((startupValue > 0 && startupID.length > 0) || startupValue == 6) {
             newPage = true; 
 
             localStorage.setItem("value", startupValue);
@@ -43,6 +43,8 @@ select.addEventListener("change", function() {
         } else if(select.value == 3) {
             textarea.placeholder = "Enter the playlist id";
         } else if(select.value == 4) {
+            textarea.placeholder = "Enter the album id";
+        } else if(select.value == 5) {
             textarea.placeholder = "Enter the track id";
         } else {
             textarea.placeholder = "";
