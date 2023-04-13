@@ -330,7 +330,7 @@ textfield.addEventListener('input', function() {
             }
         });
     }
-})
+});
 
 function clearAlternatives() {
     var parent = document.querySelector("#alternatives div");
@@ -338,6 +338,31 @@ function clearAlternatives() {
         parent.removeChild(parent.lastChild);
     }
 }
+
+document.addEventListener('click', function(e) {
+    const timer = document.getElementById('time-parts');
+    var rect = timer.getBoundingClientRect();
+
+    const startX = rect.left + window.pageXOffset; 
+    const startY = rect.top + window.pageYOffset; 
+
+    var timerWidth = 0; 
+    for(let i = 1; i <= listened; i++) {
+        timerWidth += document.querySelector(`#time-parts div:nth-child(${i + 1})`).offsetWidth;
+    }
+
+    if(gameOver)
+        timerWidth = timer.offsetWidth;
+
+    const endX = startX + timerWidth;
+    const endY = startY + timer.offsetHeight; 
+    
+    const inTimer = e.clientX >= startX && e.clientX <= endX && e.clientY >= startY && e.clientY <= endY;
+
+    console.log(`inTimer: ${inTimer}`);
+
+    // console.log(`startX: ${startX}, startY: ${startY}, endX: ${endX}, endY: ${endY}`);
+});
 
 clearButton.addEventListener('click', clear);
 
