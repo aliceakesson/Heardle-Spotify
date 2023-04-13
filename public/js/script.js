@@ -1,5 +1,7 @@
 import {toggle, playSong } from './player.js';
 
+var recent = [];
+
 const startupValue = parseInt(localStorage.getItem('value'));
 const startupID = localStorage.getItem('id');
 
@@ -13,6 +15,9 @@ var endpoint = '';
 
 var data = [];
 var index = -1; 
+
+const whileMargin = 50; 
+const probabilityLimit = 20; 
 
 function newSong() {
     artistName = ''; 
@@ -40,14 +45,24 @@ function newSong() {
                         data.push(trackItem);
                     }
                 });
-    
-                index = Math.floor(Math.random() * data.length);
-                const song = data[index].titel + " - " + data[index].artist;
-    
-                document.getElementById('song').innerHTML = song;
-    
-                localStorage.setItem('uri', data[index].uri);
-                localStorage.setItem('song', song);
+                
+                const lastItems = recent.length > probabilityLimit ? recent.slice(-probabilityLimit) : recent;
+                var k = whileMargin; 
+
+                do {
+                    index = Math.floor(Math.random() * data.length);
+                    const song = data[index].titel + " - " + data[index].artist;
+        
+                    document.getElementById('song').innerHTML = song;
+        
+                    localStorage.setItem('uri', data[index].uri);
+                    localStorage.setItem('song', song);
+                    
+                    k++;
+                } while(!lastItems.some(item => item.titel == data[index].titel) && k < whileMargin)
+
+                recent.push(data[index]);
+
             })
             .catch((error) => console.error(error));
             break; 
@@ -91,18 +106,23 @@ function newSong() {
                             tracks.forEach((track) => {
                             data.push(track);
                             });
-                            console.log(data);
 
-                            index = Math.floor(Math.random() * data.length);
+                            const lastItems = recent.length > probabilityLimit ? recent.slice(-probabilityLimit) : recent;
+                            var k = whileMargin; 
 
-                            console.log(`index: ${index}, length: ${data.length}`);
+                            do {
+                                index = Math.floor(Math.random() * data.length);
+                                const song = data[index].titel + " - " + data[index].artist;
+                    
+                                document.getElementById('song').innerHTML = song;
+                    
+                                localStorage.setItem('uri', data[index].uri);
+                                localStorage.setItem('song', song);
+                                
+                                k++;
+                            } while(!lastItems.some(item => item.titel == data[index].titel) && k < whileMargin)
 
-                            const song = data[index].titel + " - " + data[index].artist;
-
-                            document.getElementById('song').innerHTML = song;
-
-                            localStorage.setItem('uri', data[index].uri);
-                            localStorage.setItem('song', song);
+                            recent.push(data[index]);
                         })
                         .catch((error) => console.error(error));
                 })
@@ -124,13 +144,22 @@ function newSong() {
                     }
                 });
     
-                index = Math.floor(Math.random() * data.length);
-                const song = data[index].titel + " - " + data[index].artist;
-    
-                document.getElementById('song').innerHTML = song;
-    
-                localStorage.setItem('uri', data[index].uri);
-                localStorage.setItem('song', song);
+                const lastItems = recent.length > probabilityLimit ? recent.slice(-probabilityLimit) : recent;
+                var k = whileMargin; 
+
+                do {
+                    index = Math.floor(Math.random() * data.length);
+                    const song = data[index].titel + " - " + data[index].artist;
+        
+                    document.getElementById('song').innerHTML = song;
+        
+                    localStorage.setItem('uri', data[index].uri);
+                    localStorage.setItem('song', song);
+                    
+                    k++;
+                } while(!lastItems.some(item => item.titel == data[index].titel) && k < whileMargin)
+
+                recent.push(data[index]);
             })
             .catch((error) => console.error(error));
             break; 
@@ -163,13 +192,22 @@ function newSong() {
                     }
                 });
     
-                index = Math.floor(Math.random() * data.length);
-                const song = data[index].titel + " - " + data[index].artist;
-    
-                document.getElementById('song').innerHTML = song;
-    
-                localStorage.setItem('uri', data[index].uri);
-                localStorage.setItem('song', song);
+                const lastItems = recent.length > probabilityLimit ? recent.slice(-probabilityLimit) : recent;
+                var k = whileMargin; 
+
+                do {
+                    index = Math.floor(Math.random() * data.length);
+                    const song = data[index].titel + " - " + data[index].artist;
+        
+                    document.getElementById('song').innerHTML = song;
+        
+                    localStorage.setItem('uri', data[index].uri);
+                    localStorage.setItem('song', song);
+                    
+                    k++;
+                } while(!lastItems.some(item => item.titel == data[index].titel) && k < whileMargin)
+
+                recent.push(data[index]);
             })
             .catch((error) => console.error(error));
             break; 
