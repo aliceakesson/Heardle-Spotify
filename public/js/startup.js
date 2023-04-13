@@ -15,7 +15,7 @@ button.addEventListener("click", function() {
         startupValue = parseInt(select.value); 
         startupID = textarea.value; 
 
-        if((startupValue > 0 && startupID.length > 0) || startupValue == 4) {
+        if((startupValue > 0 && startupID.length > 0) || startupValue == 5) {
             newPage = true; 
 
             localStorage.setItem("value", startupValue);
