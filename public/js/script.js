@@ -36,7 +36,9 @@ function newSong() {
                 const tracks = responseData.tracks.items;
                 tracks.forEach((track) => {
                     const trackItem = { titel:track.name, artist:track.artists[0].name, uri:track.uri };
-                    data.push(trackItem);
+                    if(!data.some(trackItem2 => trackItem2.titel == trackItem.titel)) {
+                        data.push(trackItem);
+                    }
                 });
     
                 index = Math.floor(Math.random() * data.length);
@@ -117,7 +119,9 @@ function newSong() {
                 const tracks = responseData.items;
                 tracks.forEach((track) => {
                     const trackItem = { titel:track.track.name, artist:track.track.artists[0].name, uri:track.track.uri };
-                    data.push(trackItem);
+                    if(!data.some(trackItem2 => trackItem2.titel == trackItem.titel)) {
+                        data.push(trackItem);
+                    }
                 });
     
                 index = Math.floor(Math.random() * data.length);
@@ -154,7 +158,9 @@ function newSong() {
                 const tracks = responseData.items;
                 tracks.forEach((track) => {
                     const trackItem = { titel:track.name, artist:track.artists[0].name, uri:track.uri };
-                    data.push(trackItem);
+                    if(!data.some(trackItem2 => trackItem2.titel == trackItem.titel)) {
+                        data.push(trackItem);
+                    }
                 });
     
                 index = Math.floor(Math.random() * data.length);
