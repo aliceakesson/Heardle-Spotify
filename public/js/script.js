@@ -547,7 +547,12 @@ function submit(choice) {
     var songString = JSON.stringify(choice);
     songString = songString.substring(1, songString.length - 1);
 
-    const song = localStorage.getItem('song');
+    var song = localStorage.getItem('song');
+
+    if(specificSong) {
+        songString = songString.toLowerCase();
+        song = song.toLowerCase();
+    }
 
     if(songString != song) {
         if(songString != "") {
