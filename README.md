@@ -19,7 +19,7 @@
 ## About The Project
 
 <p>
-This is another version of heardle made completely by me, wherein the user can choose freely regarding choice of song. For example: song by artist, song by playlist och a song from the user's top songs.
+This is another version of Heardle made completely by me, where the user can choose freely regarding choice of music. For example: song by artist, song by playlist or a song from the user's top songs.
 </p>
 
 <br><br>
