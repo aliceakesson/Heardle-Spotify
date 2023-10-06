@@ -79,7 +79,7 @@ After that, install npm and nodemon in the current folder using the following tw
   npm install -g nodemon
   ```
   
- If everything goes well, the application should then be playable by calling the command to start the server, then open up the server in your browser of choice at <a>http://localhost:8888</a>.
+ If everything goes well, the application should then be playable by calling the command to start the server, then open up the server in your browser of choice at <a>http://localhost:8888/login</a>.
  
  ```sh
   nodemon server.js
