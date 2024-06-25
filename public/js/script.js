@@ -16,10 +16,15 @@ var endpoint = '';
 var data = [];
 var index = -1; 
 
+var specificSong = false; 
+
 const whileMargin = 50; 
 const probabilityLimit = 20; 
 
 function newSong() {
+
+    specificSong = false;
+
     artistName = ''; 
     searchType = '';
     limit = 20; 
@@ -40,7 +45,7 @@ function newSong() {
             .then((responseData) => {
                 const tracks = responseData.tracks.items;
                 tracks.forEach((track) => {
-                    const trackItem = { titel:track.name, artist:track.artists[0].name, uri:track.uri };
+                    const trackItem = { titel:track.name, artist:track.artists[0].name, uri:track.uri, duration:track.duration_ms };
                     if(!data.some(trackItem2 => trackItem2.titel == trackItem.titel)) {
                         data.push(trackItem);
                     }
@@ -87,7 +92,7 @@ function newSong() {
                                 const tracks = responseData2.items;
                                 const temp = JSON.parse(localStorage.getItem('tracks'));
                                 tracks.forEach((track) => {
-                                    const trackItem = { titel:track.name, artist:track.artists[0].name, uri:track.uri };
+                                    const trackItem = { titel:track.name, artist:track.artists[0].name, uri:track.uri, duration:track.duration_ms };
                                     if(!temp.some(trackItem2 => trackItem2.titel == trackItem.titel)) {
                                         temp.push(trackItem);
                                     }
@@ -138,7 +143,7 @@ function newSong() {
             .then((responseData) => {
                 const tracks = responseData.items;
                 tracks.forEach((track) => {
-                    const trackItem = { titel:track.track.name, artist:track.track.artists[0].name, uri:track.track.uri };
+                    const trackItem = { titel:track.track.name, artist:track.track.artists[0].name, uri:track.track.uri, duration:track.track.duration_ms };
                     if(!data.some(trackItem2 => trackItem2.titel == trackItem.titel)) {
                         data.push(trackItem);
                     }
@@ -171,7 +176,7 @@ function newSong() {
             .then((responseData) => {
                 const tracks = responseData.items;
                 tracks.forEach((track) => {
-                    const trackItem = { titel:track.name, artist:track.artists[0].name, uri:track.uri };
+                    const trackItem = { titel:track.name, artist:track.artists[0].name, uri:track.uri, duration:track.duration_ms };
                     if(!data.some(trackItem2 => trackItem2.titel == trackItem.titel)) {
                         data.push(trackItem);
                     }
@@ -199,6 +204,9 @@ function newSong() {
             .catch((error) => console.error(error));
             break; 
         case 5: //Specific song
+
+            specificSong = true; 
+
             endpoint = `https://api.spotify.com/v1/tracks/${startupID}`;
     
             fetch(endpoint, { headers })
@@ -209,6 +217,7 @@ function newSong() {
     
                 localStorage.setItem('uri', 'spotify:track:' + startupID);
                 localStorage.setItem('song', song);
+                localStorage.setItem('duration', responseData.duration_ms);
             })
             .catch((error) => console.error(error));
             break; 
@@ -221,7 +230,7 @@ function newSong() {
             .then((responseData) => {
                 const tracks = responseData.items;
                 tracks.forEach((track) => {
-                    const trackItem = { titel:track.name, artist:track.artists[0].name, uri:track.uri };
+                    const trackItem = { titel:track.name, artist:track.artists[0].name, uri:track.uri, duration:track.duration_ms };
                     if(!data.some(trackItem2 => trackItem2.titel == trackItem.titel)) {
                         data.push(trackItem);
                     }
@@ -255,7 +264,7 @@ function newSong() {
             .then((responseData) => {
                 const tracks = responseData.items;
                 tracks.forEach((track) => {
-                    const trackItem = { titel:track.track.name, artist:track.track.artists[0].name, uri:track.track.uri };
+                    const trackItem = { titel:track.track.name, artist:track.track.artists[0].name, uri:track.track.uri, duration:track.track.duration_ms };
                     if(!data.some(trackItem2 => trackItem2.titel == trackItem.titel)) {
                         data.push(trackItem);
                     }
@@ -566,7 +575,12 @@ function submit(choice) {
     var songString = JSON.stringify(choice);
     songString = songString.substring(1, songString.length - 1);
 
-    const song = localStorage.getItem('song');
+    var song = localStorage.getItem('song');
+
+    if(specificSong) {
+        songString = songString.toLowerCase();
+        song = song.toLowerCase();
+    }
 
     if(songString != song) {
         if(songString != "") {
@@ -714,66 +728,26 @@ function showSong() {
     
     playButton.className = "";
     playButton.classList.add("fa-solid");
+
+    var duration = 0; 
     
-    fetch('https://api.spotify.com/v1/me/player', {
-    headers: {
-        'Authorization': `Bearer ${access_token}`
-    }
-    })
-    .then(response => {
-        if (!response.ok) {
-        throw new Error('Failed to get current playback state');
-        }
-        return response.json();
-    })
-    .then(data => {
-        const duration = data.item.duration_ms; 
-        const secondsTotal = parseInt(duration / 1000);
-        const minutes = parseInt(secondsTotal / 60);
-        const seconds = parseInt(secondsTotal - (minutes * 60));
+    if(!specificSong)
+        duration = data[index].duration;
+    else    
+        duration = parseInt(localStorage.getItem('duration'));
 
-        var timeP = document.querySelector('#play p:last-child');
+    const secondsTotal = parseInt(duration / 1000);
+    const minutes = parseInt(secondsTotal / 60);
+    const seconds = parseInt(secondsTotal - (minutes * 60));
 
-        var secondsString = seconds + "";
-        if(seconds < 10)
-            secondsString = "0" + seconds;
+    var timeP = document.querySelector('#play p:last-child');
 
-        timeP.innerHTML = minutes + ":" + secondsString;
-        endTime = secondsTotal; 
-    })
-    .catch(error => {
-        console.error(error);
-    });
+    var secondsString = seconds + "";
+    if(seconds < 10)
+        secondsString = "0" + seconds;
 
-    fetch('https://api.spotify.com/v1/me/player', {
-    headers: {
-        'Authorization': `Bearer ${access_token}`
-    }
-    })
-    .then(response => {
-        if (!response.ok) {
-        throw new Error('Failed to get current playback state');
-        }
-        return response.json();
-    })
-    .then(data => {
-        const duration = data.item.duration_ms; 
-        const secondsTotal = parseInt(duration / 1000);
-        const minutes = parseInt(secondsTotal / 60);
-        const seconds = parseInt(secondsTotal - (minutes * 60));
-
-        var timeP = document.querySelector('#play p:last-child');
-
-        var secondsString = seconds + "";
-        if(seconds < 10)
-            secondsString = "0" + seconds;
-
-        timeP.innerHTML = minutes + ":" + secondsString;
-        endTime = secondsTotal; 
-    })
-    .catch(error => {
-        console.error(error);
-    });
+    timeP.innerHTML = minutes + ":" + secondsString;
+    endTime = secondsTotal; 
 
     play();
 

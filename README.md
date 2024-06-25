@@ -2,6 +2,8 @@
 
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/aliceakesson)
+
 <br />
 <div align="center">
   <a href="https://github.com/aliceakesson/Heardle-Spotify/">
@@ -19,7 +21,7 @@
 ## About The Project
 
 <p>
-This is another version of heardle made completely by me, wherein the user can choose freely regarding choice of song. For example: song by artist, song by playlist och a song from the user's top songs.
+This is another version of Heardle made completely by me, where the user can choose freely regarding choice of music. For example: song by artist, song by playlist or a song from the user's top songs.
 </p>
 
 <br><br>
@@ -53,11 +55,12 @@ As mentioned in the requirements, you will first need to create your own Spotify
 
 1. Click on "Create app"
 2. Give the app a name (any) and a short description
-3. Enter 'http://localhost:8888/callback' for the redirect URL
-4. Check the terms of service box 
-5. Click on "Save"
+3. Leave the textfield for "Website" blank. This is not needed
+4. Enter 'http://localhost:8888/callback' for the redirect URL
+5. Check the terms of service box 
+6. Click on "Save"
 
-Now, proceed to download and extract the zip-file of the project. Open the project any editor and locate the environment-file (.env) which is located in the 'public' folder. The values for CLIENT_ID and CLIENT_SECRET can be found by clicking on the settings of your Spotify Application (The client secret will be visible by clicking on "View client secret"). Enter these values for their respective variables in the environment. 
+Now, proceed to download and extract the zip-file of this GitHub project. Open the project in any code editor and locate the environment-file (.env) which is located in the 'public' folder. The values for CLIENT_ID and CLIENT_SECRET can be found by clicking on the settings of your Spotify Application (The client secret will be visible by clicking on "View client secret"). Enter these values for their respective variables in the environment. 
 
 > **Note:** The values should not be written inside string literals, they should just be inserted as they are (eg. CLIENT_ID=1234567890, not CLIENT_ID="1234567890")
 
@@ -78,7 +81,7 @@ After that, install npm and nodemon in the current folder using the following tw
   npm install -g nodemon
   ```
   
- If everything goes well, the application should then be playable by calling the command to start the server, then open up the server in your browser of choice at <a>http://localhost:8888</a>.
+ If everything goes well, the application should then be playable by calling the command to start the server, then open up the server in your browser of choice at <a>http://localhost:8888/login</a>.
  
  ```sh
   nodemon server.js
