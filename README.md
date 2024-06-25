@@ -51,6 +51,8 @@ The site runs on a local host, made using Node.js. Further, it's built using Spo
 
 ## Installation
 
+If you don't already have NodeJS installed, you will need to do that first. NodeJS can be installed [here](https://nodejs.org/en).
+
 As mentioned in the requirements, you will first need to create your own Spotify Application. This is easily done through <a href="https://developer.spotify.com/dashboard">the Spotify Dashboard</a>. The steps are as following: 
 
 1. Click on "Create app"
@@ -92,13 +94,21 @@ It can be exited at anytime by using Ctrl+C in the terminal, or be refreshed by 
 ```sh
   rs
   ```
+## Having Problems?
+First, check the following: 
+- Your Spotify-application is open
+- You've opened it thorugh the correct URL, i.e. localhost:8888/login
+- Your server is running through your commando prompt
+
+After that, you might try the following:
+- Check that you've achieved an accesstoken in **public/views/index.html**, at first it was empty
+- Start some song thorugh Spotify, restart the server through **rs** and reload the page
+- Check that your application through **Spotify Dashboard** is correctly made and that you've inserted the correct **CLIENT_ID** and **CLIENT_SECRET** in your **public/.env**
 
 <!-- CONTACT -->
 ## Contact
 
 Alice Åkesson - alicek732@gmail.com
-
-Project Link: [https://github.com/aliceakesson/Heardle-Spotify](https://github.com/aliceakesson/Heardle-Spotify)
 
 [css-shield]: https://img.shields.io/badge/CSS-239120?&style=for-the-badge&logo=css3&logoColor=white
 [css-url]: https://www.w3.org/Style/CSS/Overview.en.html
