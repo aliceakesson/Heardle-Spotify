@@ -3,6 +3,7 @@
     --light-color: #ddd;
     --lighter-color: #eee;
     --gray-color: #666;
+    --green-color: green;
 }
 
 #user {
@@ -294,7 +295,7 @@ h1, #streak, #buttons div, #playAgain, #play p {
     position: absolute;
     top: 0;
     transform: translate(0, -100%);
-    border: var(--lighter-color) 1px solid;
+    border: none;
     background-color: #111;
     width: 100%;
     box-sizing: border-box;
@@ -305,12 +306,18 @@ h1, #streak, #buttons div, #playAgain, #play p {
 #alternatives div div {
     width: 700px;
     text-align: left;
-    border-top: var(--lighter-color) 1px solid;
+    border: var(--lighter-color) 1px solid;
     padding: 10px;
     box-sizing: border-box;
 }
-#alternatives div div:first-child {
-    border: none; 
+.chosenAlternative {
+    border: var(--green-color) 1px solid !important;
+}
+.chosenAlternative + div {
+    border-top: var(--green-color) 1px solid !important; 
+}
+div:has(+ .chosenAlternative) {
+    border-bottom: var(--green-color) 1px solid !important;
 }
 
 #textfield {
@@ -364,7 +371,7 @@ h1, #streak, #buttons div, #playAgain, #play p {
     left: 0;
 }
 #submit {
-    background-color: green;
+    background-color: var(--green-color);
     right: 0;
 }
 
@@ -380,7 +387,7 @@ h1, #streak, #buttons div, #playAgain, #play p {
 }
 
 #playAgain {
-    background-color: green;
+    background-color: var(--green-color);
     padding: 10px;
     font-size: 20px;
     border-radius: 5px;

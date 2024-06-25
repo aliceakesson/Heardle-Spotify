@@ -287,12 +287,10 @@ function newSong() {
 
 newSong();
 
-/* LOGIN USER */ 
+// #region LOGIN USER  ---------------------------------
 
 var userImg = document.querySelector('#user img');
 var userText = document.querySelector('#user p:last-child');
-
-endpoint = `https://api.spotify.com/v1/me/`;
     
 fetch(`https://api.spotify.com/v1/me/`, { headers })
 .then((response) => response.json())
@@ -302,7 +300,7 @@ fetch(`https://api.spotify.com/v1/me/`, { headers })
 })
 .catch((error) => console.error(error));
 
-/* ------------------------- */
+// #endregion ------------------------------------------
 
 var listened = 1;
 
@@ -320,7 +318,6 @@ const darkerColor = "#222";
 
 const timeWidth = 700; 
 var endTime = 16; 
-const alternativesLimit = 7; 
 
 var clearButton = document.querySelector('#textfield i:last-child');
 var playButton = document.querySelector('#play i');
@@ -412,7 +409,7 @@ textfield.addEventListener('input', function() {
         data.forEach(function(song) {
             if((song.titel.toLowerCase().includes(textfield.value.toLowerCase()) 
                 || song.artist.toLowerCase().includes(textfield.value.toLowerCase()))
-                && count < alternativesLimit) {
+                && count < 7) { // limit of 7 songs in the "alternatives"-list 
                 var div = document.createElement("div");
                 div.innerHTML = song.titel + " - " + song.artist;
     
@@ -429,13 +426,51 @@ textfield.addEventListener('input', function() {
         });
     }
 });
-
+document.onkeydown = function(e) {
+    if(e.key == "ArrowDown" || e.key == "ArrowUp") {
+        var down = e.key == "ArrowDown"
+        var chosen = document.querySelector(".chosenAlternative");
+        if(chosen == null) {
+            chosen = document.querySelector("#alternatives div div");
+            chosen.classList.add("chosenAlternative");
+            textfield.value = chosen.innerHTML;
+            textfield.value = textfield.value.replace('amp;', '');
+        } else {
+            var next = chosen.nextSibling;
+            if(!down){
+                next = chosen.previousSibling;
+            }
+            if(next == null) {
+                next = document.querySelector("#alternatives div div");
+                if(!down) {
+                    next = document.querySelector("#alternatives div div:last-of-type")
+                }
+            }
+            next.classList.add("chosenAlternative");
+            chosen.classList.remove("chosenAlternative");
+            textfield.value = next.innerHTML;
+            textfield.value = textfield.value.replace('amp;', '');
+        }
+    } else if(e.key == "Enter") {
+        var chosen = document.querySelector(".chosenAlternative");
+        if(chosen != null) {
+            submitButton.click();
+        }
+    }
+};
 function clearAlternatives() {
     var parent = document.querySelector("#alternatives div");
     while(parent.firstChild) {
         parent.removeChild(parent.lastChild);
     }
 }
+textfield.addEventListener('focus', function() {
+    textDiv.style.borderColor = greenColor;
+});
+textfield.addEventListener('blur', function() {
+    textDiv.style.borderColor = lightColor;
+    clearAlternatives();
+});
 
 document.addEventListener('click', function(e) {
     const timer = document.getElementById('time-parts');
@@ -526,13 +561,6 @@ backToMenuButton.addEventListener('click', function() {
     window.location.href = "/";
 });
 
-textfield.addEventListener('focus', function() {
-    textDiv.style.borderColor = greenColor;
-});
-textfield.addEventListener('blur', function() {
-    textDiv.style.borderColor = lightColor;
-    clearAlternatives();
-});
 
 function submit(choice) {
     var songString = JSON.stringify(choice);

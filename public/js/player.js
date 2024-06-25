@@ -152,8 +152,7 @@ const playSong = async (uri) => {
             position_ms: 0
         })
     })
-    .then(response => console.log(response))
-    .then(data => console.log(`Data: ${data}`))
+    // .then(response => console.log(response))
     .catch(error => console.error(error));
 }
 
